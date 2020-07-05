@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.vergessen.blog.mapper.CategoryInfoMapper">
+  <resultMap id="BaseResultMap" type="top.vergessen.blog.domain.CategoryInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl" />
+    <result column="is_effective" jdbcType="TINYINT" property="isEffective" />
+    <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
+  </resultMap>
+</mapper>

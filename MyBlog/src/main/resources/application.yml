@@ -1,0 +1,41 @@
+server:
+  port: 8666
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: X-Real-IP
+    protocol-header: X-Forwarded-Proto
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/myblog?&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    hikari:
+      idle-timeout: 60000
+      maximum-pool-size: 60
+      minimum-idle: 20
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  thymeleaf:
+    cache: false #暂时关闭缓存
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    prefix: classpath:/static/
+    suffix: .html
+mybatis:
+  type-aliases-package: top.vergessen.domain
+
+# jwt配置
+jwt:
+  # 加密掩码，建议定期修改,长度需要大于256位
+  secret: MyBlog--Vergessen--secret--default
+  # 有效期，单位秒，默认三天
+  expire-time-in-second: 259200
