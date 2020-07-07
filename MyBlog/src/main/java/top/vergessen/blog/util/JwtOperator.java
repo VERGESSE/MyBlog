@@ -54,6 +54,30 @@ public class JwtOperator {
     }
 
     /**
+     * 从token中获取指定的key的值
+     * @param token token
+     * @param key 指定的键值
+     * @return 返回key对应的value不存在则返回null
+     */
+    public Object getInfoFromToken(String token, String key) {
+        Claims claims = this.getClaimsFromToken(token);
+        return claims.get(key);
+    }
+
+    /**
+     * 从token中获取指定的key的值
+     * @param token token
+     * @param key 指定的键值
+     * @param tClass 指定返回类型
+     * @param <T> 返回类型
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getInfoFromToken2(String token, String key, Class<T> tClass) {
+        Claims claims = this.getClaimsFromToken(token);
+        return claims.get(key,tClass);
+    }
+
+    /**
      * 获取token的过期时间
      *
      * @param token token

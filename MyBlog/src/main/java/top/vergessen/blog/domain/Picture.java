@@ -17,6 +17,15 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "tbl_picture")
 public class Picture {
+
+    /**
+     * 定义图库对应类型的常量
+     */
+    public transient static final Byte HOME_PAGE = 0;
+    public transient static final Byte ARTICLE_PIC = 1;
+    public transient static final Byte BLOG_PIC = 2;
+    public transient static final Byte ADMIN_HOME_PAGE = 3;
+
     /**
      * 图片id
      */

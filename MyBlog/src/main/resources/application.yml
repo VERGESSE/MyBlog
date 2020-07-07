@@ -32,10 +32,20 @@ spring:
     suffix: .html
 mybatis:
   type-aliases-package: top.vergessen.domain
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    cache-enabled: true
+    call-setters-on-nulls: true
+    # 开启字段的下划线自动转驼峰格式
+    map-underscore-to-camel-case: true
 
+logging:
+  level:
+    top.vergessen.blog.mapper: trace
 # jwt配置
 jwt:
   # 加密掩码，建议定期修改,长度需要大于256位
   secret: MyBlog--Vergessen--secret--default
   # 有效期，单位秒，默认三天
   expire-time-in-second: 259200
+

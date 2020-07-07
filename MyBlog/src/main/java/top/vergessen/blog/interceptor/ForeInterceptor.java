@@ -58,7 +58,7 @@ public class ForeInterceptor implements HandlerInterceptor {
                 UserAgentUtil.getOsAndBrowserInfo(request.getHeader("User-Agent"));
 
         if (StringUtils.isBlank(ip)) {
-            ip = "0.0.0.0";
+            ip = request.getRemoteAddr();
         }
         if (StringUtils.isBlank(url)) {
             url = "获取URL失败";
@@ -92,11 +92,13 @@ public class ForeInterceptor implements HandlerInterceptor {
             if (addr == null) {
                 String baseUrl = "http://whois.pconline.com.cn/ipJson.jsp?json=true&ip=";
                 String json = restTemplate
-                        .getForObject(baseUrl + "202.173.11.248", String.class);
+                        .getForObject(baseUrl + sysLog.getIp(), String.class);
                 HashMap hashMap = JSON.parseObject(json, HashMap.class);
                 addr = (String) Objects.requireNonNull(hashMap).get("addr");
             }
+            String detail = sysLogService.selectDetailByIp(sysLog.getIp());
             sysLog.setAddr(addr);
+            sysLog.setDetail(detail);
             sysLogService.addLog(sysLog);
         });
     }

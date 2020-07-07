@@ -14,4 +14,12 @@
     <result column="operate_url" jdbcType="VARCHAR" property="operateUrl" />
     <result column="operate_by" jdbcType="VARCHAR" property="operateBy" />
   </resultMap>
+
+    <select id="selectOneByIp" resultType="top.vergessen.blog.domain.SysLog">
+        SELECT * FROM sys_log WHERE ip = #{ip} limit 1
+    </select>
+
+    <select id="selectCountByTime" resultType="java.lang.Integer">
+        select COUNT(id) FROM sys_log WHERE create_by BETWEEN #{time1} AND #{time2}
+    </select>
 </mapper>

@@ -11,4 +11,9 @@
     <result column="picture_type" jdbcType="TINYINT" property="pictureType" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
   </resultMap>
+
+    <select id="getRandomPic" resultMap="BaseResultMap">
+        SELECT picture_url,picture_url_small FROM tbl_picture
+        WHERE picture_type = #{type} ORDER BY rand() LIMIT #{num}
+    </select>
 </mapper>
