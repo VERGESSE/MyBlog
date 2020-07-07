@@ -22,4 +22,12 @@
     <select id="selectCountByTime" resultType="java.lang.Integer">
         select COUNT(id) FROM sys_log WHERE create_by BETWEEN #{time1} AND #{time2}
     </select>
+
+    <select id="selectAllOrderByTime" resultType="top.vergessen.blog.domain.SysLog">
+        SELECT ip,addr,detail,create_by,remark,operate_url,operate_by FROM sys_log ORDER BY create_by DESC
+    </select>
+
+    <update id="updateIpDetail">
+        UPDATE sys_log SET detail = #{detail} WHERE ip = #{ip};
+    </update>
 </mapper>

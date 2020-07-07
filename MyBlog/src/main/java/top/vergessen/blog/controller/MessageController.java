@@ -4,11 +4,11 @@ import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.vergessen.blog.auth.CheckLogin;
 import top.vergessen.blog.domain.Message;
+import top.vergessen.blog.exception.BlogException;
+import top.vergessen.blog.exception.ExceptionEnum;
 import top.vergessen.blog.service.MessageService;
 
 /**
@@ -37,7 +37,8 @@ public class MessageController {
      * @param size 每页的条数
      * @return 分页后的数据
      */
-    @GetMapping("getMsg")
+    @GetMapping("msg")
+    @CheckLogin
     public ResponseEntity<PageInfo<Message>> getMsg(Integer page, Integer size){
         if (page <= 0 ){
             page = 1;
@@ -47,5 +48,39 @@ public class MessageController {
         }
         PageInfo<Message> msgs = messageService.selectPageMessage(page, size);
         return ResponseEntity.ok(msgs);
+    }
+
+    /**
+     * 根据提供的{@Message}对象更新数据库对应留言id的字段
+     * @param message 留言信息
+     * @return 是否修改成功
+     */
+    @PutMapping("/msg")
+    @CheckLogin
+    public ResponseEntity<Void> changeShow(@RequestBody Message message){
+        Byte isShow = message.getIsShow();
+        if (isShow == 1){
+            message.setIsShow((byte)0);
+        } else {
+            message.setIsShow((byte)1);
+        }
+        if (!messageService.updateByMessage(message)){
+            throw new BlogException(ExceptionEnum.MESSAGE_UPDATE_ERROR);
+        }
+        return ResponseEntity.ok(null);
+    }
+
+    /**
+     * 根据提供的{@Message}对象删除数据库对应留言id的字段
+     * @param message 留言信息
+     * @return 是否删除成功
+     */
+    @DeleteMapping("/msg")
+    @CheckLogin
+    public ResponseEntity<Void> deleteMsg(@RequestBody Message message){
+        if(!messageService.deleteMsgById(message)){
+            throw new BlogException(ExceptionEnum.MESSAGE_UPDATE_ERROR);
+        }
+        return ResponseEntity.ok(null);
     }
 }

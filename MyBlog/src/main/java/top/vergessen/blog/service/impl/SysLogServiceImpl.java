@@ -1,5 +1,7 @@
 package top.vergessen.blog.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,12 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     public void addLog(SysLog sysLog) {
         sysLogMapper.insert(sysLog);
+    }
+
+    @Override
+    public PageInfo<SysLog> getLogs(Integer page, Integer size) {
+        return PageHelper.startPage(page, size).doSelectPageInfo(
+                sysLogMapper::selectAllOrderByTime);
     }
 
     @Override
@@ -81,5 +89,10 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     public Integer getAllVisitors() {
         return sysLogMapper.selectCountByExample(new Example(SysLog.class));
+    }
+
+    @Override
+    public void updateIpDetail(String ip, String detail) {
+        sysLogMapper.updateIpDetail(ip, detail);
     }
 }

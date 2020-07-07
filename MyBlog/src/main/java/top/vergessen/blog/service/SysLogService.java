@@ -1,5 +1,6 @@
 package top.vergessen.blog.service;
 
+import com.github.pagehelper.PageInfo;
 import top.vergessen.blog.domain.SysLog;
 
 import java.util.List;
@@ -16,6 +17,14 @@ public interface SysLogService {
      * @param sysLog 日志信息
      */
     void addLog(SysLog sysLog);
+
+    /**
+     * 根据传入的page和size返回分页的日志信息
+     * @param page 页码，最小为1
+     * @param size 每页条数
+     * @return 日志列表
+     */
+    PageInfo<SysLog> getLogs(Integer page, Integer size);
 
     /**
      * 获取24小时访客记录
@@ -47,4 +56,11 @@ public interface SysLogService {
      * @return 访客记录条数
      */
     Integer getAllVisitors();
+
+    /**
+     * 更新具体ip的描述信息
+     * @param ip ip
+     * @param detail 新的描述信息
+     */
+    void updateIpDetail(String ip, String detail);
 }

@@ -5,6 +5,7 @@ import tk.mybatis.mapper.common.Mapper;
 import top.vergessen.blog.domain.SysLog;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Vergessen
@@ -28,4 +29,16 @@ public interface SysLogMapper extends Mapper<SysLog> {
     Integer selectCountByTime(@Param("time1") String time1, @Param("time2") String time2);
 
 
+    /**
+     * 获取全部的日志，按时间倒序排序，通过PageHelper分页使用
+     * @return 日志信息列表
+     */
+    List<SysLog> selectAllOrderByTime();
+
+    /**
+     * 更新具体ip的描述信息
+     * @param ip ip
+     * @param detail 新的描述信息
+     */
+    void updateIpDetail(@Param("ip") String ip, @Param("detail") String detail);
 }
