@@ -22,7 +22,7 @@
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 import TransactionTable from './components/TransactionTable'
-import { todayVisitors, yearVisitors } from '@/api/home'
+import { todayVisitors, yearVisitors } from '@/api/log'
 
 export default {
   name: 'DashboardAdmin',

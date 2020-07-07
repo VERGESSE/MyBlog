@@ -27,3 +27,18 @@ export function yearVisitorNum() {
     method: 'get'
   })
 }
+
+export function getLogs(pageInfo) {
+  return request({
+    url: '/sys/getLogs?page=' + pageInfo.pageNum + '&size=' + pageInfo.pageSize,
+    method: 'get'
+  })
+}
+
+export function updateIpDetail(sysLog) {
+  return request({
+    url: '/sys/updateIpDetail',
+    method: 'post',
+    params: sysLog
+  })
+}

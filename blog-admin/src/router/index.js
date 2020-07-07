@@ -72,81 +72,58 @@ export const constantRoutes = [
         path: 'analyze',
         name: 'Tree',
         component: () => import('@/views/log/analyze/index'),
-        meta: { title: '日志分析', icon: 'chart' }
+        meta: { title: '日志分析', icon: 'el-icon-s-marketing' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/article',
     component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/article/query',
+    name: 'Article',
     meta: {
-      title: 'Nested',
+      title: '博文管理',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'query',
+        component: () => import('@/views/article/query/index'), // Parent router-view
+        name: 'Query',
+        meta: { title: '历史文章', icon: 'el-icon-folder-opened' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'add',
+        component: () => import('@/views/article/add/index'),
+        name: 'AddArticle',
+        meta: { title: '新增博文', icon: 'edit' }
+      },
+      {
+        path: 'category',
+        component: () => import('@/views/article/category/index'), // Parent router-view
+        name: 'Category',
+        meta: { title: '分类管理', icon: 'component' }
+      },
+      {
+        path: 'comment',
+        component: () => import('@/views/article/comment/index'), // Parent router-view
+        name: 'Comment',
+        meta: { title: '评论管理', icon: 'el-icon-s-comment' }
       }
     ]
+  },
+
+  {
+    path: '/friends',
+    component: Layout,
+    redirect: '/friends',
+    children: [{
+      path: 'friends',
+      name: 'friends',
+      component: () => import('@/views/friends/index'),
+      meta: { title: '友链管理', icon: 'peoples' }
+    }]
   },
 
   {

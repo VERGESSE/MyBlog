@@ -1,17 +1,17 @@
 <template>
-  <div class="analyze-container">
+  <div class="add-container">
     <div class="temp">待做 敬请期待 ...</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Analyze'
+  name: 'Add'
 }
 </script>
 
 <style lang="scss" scoped>
-  .analyze {
+  .add {
     &-container {
       margin: 30px;
       .temp{

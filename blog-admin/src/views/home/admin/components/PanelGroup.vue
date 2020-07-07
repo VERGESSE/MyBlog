@@ -57,7 +57,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { todayVisitorNum, yearVisitorNum } from '@/api/home'
+import { todayVisitorNum, yearVisitorNum } from '@/api/log'
 import { articleNum } from '@/api/article'
 import { messageNum } from '@/api/message'
 

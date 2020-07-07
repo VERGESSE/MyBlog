@@ -16,14 +16,30 @@
           {{ scope.row.message }}
         </template>
       </el-table-column>
-      <el-table-column label="IP" min-width="80" align="center">
+      <el-table-column label="IP" min-width="130" align="center">
         <template slot-scope="scope">
           {{ scope.row.ip }}
         </template>
       </el-table-column>
-      <el-table-column label="留言时间" min-width="180" align="center">
+      <el-table-column label="留言时间" min-width="155" align="center">
         <template slot-scope="scope">
           {{ scope.row.createTime }}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" min-width="160">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            :type="scope.row.isShow === 1 ? 'success' : 'warning'"
+            @click="handleEdit(scope.$index, scope.row)"
+          >
+            {{ scope.row.isShow === 1 ? '展示中' : '未展示' }}
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -38,21 +54,14 @@
       :total="pageInfo.total"
       :page-count="pageInfo.pages"
       @current-change="fetchData"
-      @prev-click="fetchData"
-      @next-click="fetchData"
     />
   </div>
 </template>
 
 <script>
-import { getMsg } from '@/api/message'
+import { getMsg, changeShow, deleteMsg } from '@/api/message'
 
 export default {
-  filters: {
-    formattTime(str) {
-      return str.substring(0, 30)
-    }
-  },
   data() {
     return {
       pageInfo: {
@@ -70,6 +79,32 @@ export default {
     fetchData() {
       getMsg(this.pageInfo).then(response => {
         this.pageInfo = response
+      })
+    },
+    handleEdit(index, message) {
+      changeShow(message).then(() => {
+        if (this.pageInfo.list[index].isShow === 1) {
+          this.pageInfo.list[index].isShow = 0
+        } else {
+          this.pageInfo.list[index].isShow = 1
+        }
+        this.$notify({
+          title: '更新成功',
+          message: '成功修改 ' + message.name + ' : ' + message.message.substring(0, 40) + ' 的展示状态',
+          type: 'success',
+          duration: 3000
+        })
+      })
+    },
+    handleDelete(message) {
+      deleteMsg(message).then(() => {
+        this.fetchData()
+        this.$notify({
+          title: '删除成功',
+          message: '成功删除 ' + message.name + ' : ' + message.message,
+          type: 'success',
+          duration: 3000
+        })
       })
     }
   }
