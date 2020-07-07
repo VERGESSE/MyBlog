@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="{ background : backgroundPic }">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
@@ -49,6 +49,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { getPic } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -61,17 +62,18 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 4) {
+        callback(new Error('The password can not be less than 4 digits'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: 'root',
+        password: 'root'
       },
+      backgroundPic: '',
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -88,6 +90,11 @@ export default {
       },
       immediate: true
     }
+  },
+  created() {
+    getPic().then(response => {
+      this.backgroundPic = 'url(' + response.pictureUrl + ') 0% 0% / cover'
+    })
   },
   methods: {
     showPwd() {
@@ -174,8 +181,7 @@ $light_gray:#eee;
 .login-container {
   height: 100%;
   width: 100%;
-  background: url('https://www.vergessen.top/image/2020/07/05/10_26_33.png');
-  /*overflow: hidden;*/
+  overflow: hidden;
   background-size: cover;
 
   .login-form {

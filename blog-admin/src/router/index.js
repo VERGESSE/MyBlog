@@ -46,33 +46,33 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/home/index'),
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/log',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/log/allLog',
+    name: 'log',
+    meta: { title: '访问日志', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'allLog',
+        name: 'allLog',
+        component: () => import('@/views/log/log/index'),
+        meta: { title: '日志浏览', icon: 'documentation' }
       },
       {
-        path: 'tree',
+        path: 'analyze',
         name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        component: () => import('@/views/log/analyze/index'),
+        meta: { title: '日志分析', icon: 'chart' }
       }
     ]
   },
@@ -150,12 +150,24 @@ export const constantRoutes = [
   },
 
   {
+    path: '/information',
+    component: Layout,
+    redirect: '/information',
+    children: [{
+      path: 'information',
+      name: 'information',
+      component: () => import('@/views/information/index'),
+      meta: { title: '个人信息', icon: 'user' }
+    }]
+  },
+
+  {
     path: 'external-link',
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'https://www.vergessen.top',
+        meta: { title: '博客前台', icon: 'link' }
       }
     ]
   },
