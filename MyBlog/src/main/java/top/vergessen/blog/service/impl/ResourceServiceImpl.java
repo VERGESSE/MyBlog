@@ -3,6 +3,7 @@ package top.vergessen.blog.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.vergessen.blog.domain.Resource;
 import top.vergessen.blog.mapper.ResourceMapper;
 import top.vergessen.blog.service.ResourceService;
@@ -37,6 +38,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean putRes(String key, String value) {
         Resource resource = Resource.builder().resKey(key).value(value).build();
         return resourceMapper.insertSelective(resource) > 1;

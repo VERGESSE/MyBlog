@@ -1,5 +1,6 @@
 package top.vergessen.blog.config;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -20,13 +21,16 @@ public class LocalDateTimeSerializerConfig {
     @Value("${spring.jackson.date-format}")
     private String pattern;
 
-    @Bean
-    public LocalDateTimeSerializer localDateTimeDeserializer() {
-        return new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(pattern));
-    }
-
+    /**
+     * 对 {@LocalDateTime} 进行序列化和反序列化的配置
+     */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> builder.serializerByType(LocalDateTime.class, localDateTimeDeserializer());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return builder -> builder
+                // 反序列化
+                .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(formatter))
+                // 序列化
+                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(formatter));
     }
 }

@@ -14,7 +14,7 @@ import top.vergessen.blog.service.*;
 public class ViewController {
 
     private final ArticleService articleService;
-    private final CategoryService categoryService;
+    private final CategoryTechnologyService categoryService;
     private final FriendsService friendsService;
     private final MessageService messageService;
     private final PictureService pictureService;

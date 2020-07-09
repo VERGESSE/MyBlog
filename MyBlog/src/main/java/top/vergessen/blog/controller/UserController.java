@@ -64,12 +64,11 @@ public class UserController {
 
     /**
      * 获取管理员信息,验证token
-     * @param token token
      * @return {@UserInfoVO}
      */
     @GetMapping("user/info")
     @CheckLogin
-    public ResponseEntity<UserInfoVO> getUserInfo(String token){
+    public ResponseEntity<UserInfoVO> getUserInfo(){
         return ResponseEntity.ok(UserInfoVO.builder()
                 .name(resourceService.getRes("username"))
                 .avatar(resourceService.getRes("avatar"))
@@ -82,29 +81,9 @@ public class UserController {
      * 随机获取一张后台首页图片
      * @return  后台首页图片地址
      */
-    @GetMapping("getPic")
+    @GetMapping("pic")
     public ResponseEntity<Picture> getPic(){
         return ResponseEntity.ok(
                 pictureService.getRandomPicOne(Picture.ADMIN_HOME_PAGE));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

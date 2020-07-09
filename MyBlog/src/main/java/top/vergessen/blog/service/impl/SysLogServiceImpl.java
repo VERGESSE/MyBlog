@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import top.vergessen.blog.domain.SysLog;
 import top.vergessen.blog.mapper.SysLogMapper;
@@ -32,6 +33,7 @@ public class SysLogServiceImpl implements SysLogService {
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addLog(SysLog sysLog) {
         sysLogMapper.insert(sysLog);
     }
@@ -73,7 +75,7 @@ public class SysLogServiceImpl implements SysLogService {
     public String selectDetailByIp(String ip) {
         SysLog sysLog = sysLogMapper.selectOneByIp(ip);
         if (sysLog == null || sysLog.getDetail() == null){
-            return "暂无";
+            return sysLog != null ? sysLog.getAddr() : "暂无";
         }
         return sysLog.getDetail();
     }
@@ -92,6 +94,7 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateIpDetail(String ip, String detail) {
         sysLogMapper.updateIpDetail(ip, detail);
     }

@@ -26,13 +26,13 @@ public class JwtOperator {
      * 秘钥
      * - 默认MyBlog-Vergessen
      */
-    @Value("${secret:MyBlog--Vergessen--secret--default}")
+    @Value("${jwt.secret}")
     private String secret;
     /**
      * 有效期，单位秒
      * - 默认3天
      */
-    @Value("${expire-time-in-second:259200}")
+    @Value("${jwt.expire-time-in-second:259200}")
     private Long expirationTimeInSecond;
 
     /**

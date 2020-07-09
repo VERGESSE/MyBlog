@@ -21,7 +21,7 @@ public class ArticleController {
 
     private final ArticleService articleService;
 
-    @GetMapping("articleNum")
+    @GetMapping("num")
     public ResponseEntity<Integer> getArticleNum(){
         return ResponseEntity.ok(articleService.selectArticleCount());
     }

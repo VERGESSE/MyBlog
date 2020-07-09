@@ -38,10 +38,13 @@ mybatis:
     call-setters-on-nulls: true
     # 开启字段的下划线自动转驼峰格式
     map-underscore-to-camel-case: true
-
 logging:
   level:
     top.vergessen.blog.mapper: trace
+
+imgGo:
+  serverUrl: https://www.vergessen.top
+  auth: HYSVERGESSEN@955
 # jwt配置
 jwt:
   # 加密掩码，建议定期修改,长度需要大于256位

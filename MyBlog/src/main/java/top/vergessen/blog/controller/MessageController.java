@@ -26,7 +26,7 @@ public class MessageController {
     /**
      * 获取留言总数
      */
-    @GetMapping("messageNum")
+    @GetMapping("num")
     public ResponseEntity<Integer> getMessageNum(){
         return ResponseEntity.ok(messageService.selectMessageCount());
     }

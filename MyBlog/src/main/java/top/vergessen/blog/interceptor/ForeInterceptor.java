@@ -40,13 +40,11 @@ public class ForeInterceptor implements HandlerInterceptor {
     /**
      * 日志记录线程池
      */
-    private ExecutorService logExecutor = Executors.newFixedThreadPool(2);
+    private ExecutorService logExecutor = Executors.newFixedThreadPool(5);
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        return true;
-    }
-
+    /**
+     * 记录访客日志
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         // 访问者的IP
@@ -54,8 +52,7 @@ public class ForeInterceptor implements HandlerInterceptor {
         // 访问地址
         String url = request.getRequestURL().toString();
         //得到用户的操作系统以及浏览器信息
-        String userBrowser =
-                UserAgentUtil.getOsAndBrowserInfo(request.getHeader("User-Agent"));
+        String userBrowser = UserAgentUtil.getOsAndBrowserInfo(request.getHeader("User-Agent"));
 
         if (StringUtils.isBlank(ip)) {
             ip = request.getRemoteAddr();
@@ -87,24 +84,19 @@ public class ForeInterceptor implements HandlerInterceptor {
         // 开启线程记录日志
         logExecutor.execute(() -> {
             // 根据用户ip获取用户信息
-            String addr;
-            addr = ipAddrCache.get(sysLog.getIp());
+            String addr = ipAddrCache.get(sysLog.getIp());
             if (addr == null) {
                 String baseUrl = "http://whois.pconline.com.cn/ipJson.jsp?json=true&ip=";
                 String json = restTemplate
                         .getForObject(baseUrl + sysLog.getIp(), String.class);
                 HashMap hashMap = JSON.parseObject(json, HashMap.class);
                 addr = (String) Objects.requireNonNull(hashMap).get("addr");
+                ipAddrCache.put(sysLog.getIp(), addr);
             }
             String detail = sysLogService.selectDetailByIp(sysLog.getIp());
             sysLog.setAddr(addr);
             sysLog.setDetail(detail);
             sysLogService.addLog(sysLog);
         });
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
     }
 }

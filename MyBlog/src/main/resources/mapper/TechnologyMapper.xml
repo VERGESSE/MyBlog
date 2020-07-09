@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.vergessen.blog.mapper.TechnologyMapper">
+  <resultMap id="BaseResultMap" type="top.vergessen.blog.domain.Technology">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl" />
+    <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
+  </resultMap>
+</mapper>

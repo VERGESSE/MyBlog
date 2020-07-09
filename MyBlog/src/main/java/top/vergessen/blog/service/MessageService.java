@@ -23,4 +23,18 @@ public interface MessageService {
      * @return 分页信息
      */
     PageInfo<Message> selectPageMessage(Integer page, Integer size);
+
+    /**
+     * 根据提供的{@Message}对象更新数据库对应留言id的字段
+     * @param message 留言信息
+     * @return 是否修改成功
+     */
+    boolean updateByMessage(Message message);
+
+    /**
+     * 根据提供的{@Message}对象删除数据库对应留言id的字段
+     * @param message 留言信息
+     * @return 是否删除成功
+     */
+    boolean deleteMsgById(Message message);
 }

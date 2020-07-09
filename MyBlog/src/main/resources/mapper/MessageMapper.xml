@@ -14,6 +14,6 @@
     <result column="message" jdbcType="LONGVARCHAR" property="message" />
   </resultMap>
     <select id="selectAllOrderByTime" resultType="top.vergessen.blog.domain.Message">
-        SELECT name,email,is_show,ip,create_time,message FROM tbl_message ORDER BY create_time DESC
+        SELECT id,name,email,is_show,ip,create_time,message FROM tbl_message ORDER BY create_time DESC
     </select>
 </mapper>
