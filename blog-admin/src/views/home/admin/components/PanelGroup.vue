@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            博文数
+            文章数
           </div>
           <count-to :start-val="0" :end-val="articleNum" :duration="1500" class="card-panel-num" />
         </div>

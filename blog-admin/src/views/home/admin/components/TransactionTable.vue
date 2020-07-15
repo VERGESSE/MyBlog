@@ -46,8 +46,8 @@
 
     <el-pagination
       class="pagination"
-      background="true"
-      hide-on-single-page="true"
+      background
+      hide-on-single-page
       :current-page.sync="pageInfo.pageNum"
       :page-size="pageInfo.pageSize"
       layout="prev, pager, next"
@@ -97,13 +97,19 @@ export default {
       })
     },
     handleDelete(message) {
-      deleteMsg(message).then(() => {
-        this.fetchData()
-        this.$notify({
-          title: '删除成功',
-          message: '成功删除 ' + message.name + ' : ' + message.message,
-          type: 'success',
-          duration: 3000
+      this.$confirm('此操作将永久删除该留言, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteMsg(message).then(() => {
+          this.fetchData()
+          this.$notify({
+            title: '删除成功',
+            message: '成功删除 ' + message.name + ' : ' + message.message,
+            type: 'success',
+            duration: 3000
+          })
         })
       })
     }

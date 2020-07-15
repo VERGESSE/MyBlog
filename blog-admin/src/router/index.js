@@ -80,7 +80,7 @@ export const constantRoutes = [
   {
     path: '/article',
     component: Layout,
-    redirect: '/article/query',
+    redirect: '/article/list',
     name: 'Article',
     meta: {
       title: '博文管理',
@@ -88,15 +88,15 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'query',
-        component: () => import('@/views/article/query/index'), // Parent router-view
+        path: 'list',
+        component: () => import('@/views/article/list/index'), // Parent router-view
         name: 'Query',
         meta: { title: '历史文章', icon: 'el-icon-folder-opened' }
       },
       {
-        path: 'add',
-        component: () => import('@/views/article/add/index'),
-        name: 'AddArticle',
+        path: 'create',
+        component: () => import('@/views/article/create/index'),
+        name: 'CreateArticle',
         meta: { title: '新增博文', icon: 'edit' }
       },
       {
@@ -110,6 +110,12 @@ export const constantRoutes = [
         component: () => import('@/views/article/comment/index'), // Parent router-view
         name: 'Comment',
         meta: { title: '评论管理', icon: 'el-icon-s-comment' }
+      },
+      {
+        path: 'goodlink',
+        component: () => import('@/views/article/goodlink/index'), // Parent router-view
+        name: 'GoodLink',
+        meta: { title: '优质外链', icon: 'guide' }
       }
     ]
   },
@@ -127,6 +133,18 @@ export const constantRoutes = [
   },
 
   {
+    path: '/picture',
+    component: Layout,
+    redirect: '/picture',
+    children: [{
+      path: 'picture',
+      name: 'picture',
+      component: () => import('@/views/picture/index'),
+      meta: { title: '图床管理', icon: 'el-icon-picture-outline' }
+    }]
+  },
+
+  {
     path: '/information',
     component: Layout,
     redirect: '/information',
@@ -139,14 +157,9 @@ export const constantRoutes = [
   },
 
   {
-    path: 'external-link',
+    path: 'http://' + window.location.host,
     component: Layout,
-    children: [
-      {
-        path: 'https://www.vergessen.top',
-        meta: { title: '博客前台', icon: 'link' }
-      }
-    ]
+    meta: { title: '博客前台', icon: 'link' }
   },
 
   // 404 page must be placed at the end !!!

@@ -50,6 +50,7 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import { getPic } from '@/api/user'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -70,8 +71,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'root',
-        password: 'root'
+        username: '',
+        password: ''
       },
       backgroundPic: '',
       loginRules: {
@@ -115,6 +116,11 @@ export default {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
+            Message({
+              message: '用户名或密码不正确 ! ! !',
+              type: 'error',
+              duration: 5 * 1000
+            })
             this.loading = false
           })
         } else {

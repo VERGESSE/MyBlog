@@ -6,6 +6,7 @@ export default {
   useDefaultHTMLSanitizer: true,
   usageStatistics: false,
   hideModeSwitch: false,
+  placeholder: '请输入文章主体内容',
   toolbarItems: [
     'heading',
     'bold',

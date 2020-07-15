@@ -1,5 +1,3 @@
-import { debounce } from '@/utils'
-
 export default {
   data() {
     return {
@@ -8,11 +6,6 @@ export default {
     }
   },
   mounted() {
-    this.$_resizeHandler = debounce(() => {
-      if (this.chart) {
-        this.chart.resize()
-      }
-    }, 100)
     this.$_initResizeEvent()
     this.$_initSidebarResizeEvent()
   },

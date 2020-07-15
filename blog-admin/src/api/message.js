@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function messageNum() {
   return request({
-    url: '/message/messageNum',
+    url: '/message/num',
     method: 'get'
   })
 }

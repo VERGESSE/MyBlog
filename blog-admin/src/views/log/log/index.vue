@@ -1,39 +1,39 @@
 <template>
-  <div class="log-container">
-    <el-table :data="pageInfo.list" style="width: 100%;padding-top: 15px;">
-      <el-table-column label="IP" min-width="120">
+  <div class="log-container shadow">
+    <el-table :data="pageInfo.list" stripe border style="width: 100%;padding-top: 15px;">
+      <el-table-column label="IP" width="125">
         <template slot-scope="scope">
           {{ scope.row.ip }}
         </template>
       </el-table-column>
-      <el-table-column label="操作者描述" min-width="180" align="center">
+      <el-table-column label="操作者描述" min-width="280" align="center">
         <template slot-scope="scope">
           <el-link type="primary" @click="changeDetail(scope.row)">
             {{ scope.row.detail }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column label="操作内容" min-width="100" align="center">
+      <el-table-column label="操作内容" min-width="80" align="center">
         <template slot-scope="scope">
           {{ scope.row.remark }}
         </template>
       </el-table-column>
-      <el-table-column label="URL" min-width="300" align="center">
+      <el-table-column label="url" width="190" align="center">
         <template slot-scope="scope">
-          {{ scope.row.operateUrl }}
+          {{ scope.row.operateUrl.split("/").slice(3).join("/") }}
         </template>
       </el-table-column>
-      <el-table-column label="操作者地址" min-width="350" align="center">
+      <el-table-column label="操作者地址" min-width="320" align="center">
         <template slot-scope="scope">
           {{ scope.row.addr }}
         </template>
       </el-table-column>
-      <el-table-column label="时间" min-width="" width="180" align="center">
+      <el-table-column label="时间" width="160" align="center">
         <template slot-scope="scope">
           {{ scope.row.createBy }}
         </template>
       </el-table-column>
-      <el-table-column label="设备" min-width="240" align="center">
+      <el-table-column label="设备" min-width="280" align="center">
         <template slot-scope="scope">
           {{ scope.row.operateBy }}
         </template>
@@ -42,11 +42,11 @@
 
     <el-pagination
       class="pagination"
-      background="true"
-      hide-on-single-page="true"
+      background
+      hide-on-single-page
       :current-page.sync="pageInfo.pageNum"
       :page-size="pageInfo.pageSize"
-      layout="prev, pager, next"
+      layout="prev, pager, next, total"
       :total="pageInfo.total"
       :page-count="pageInfo.pages"
       @current-change="fetchData"
@@ -91,26 +91,19 @@ export default {
       }).then(({ value }) => {
         sysLog.detail = value
         // 更新描述
-        updateIpDetail(sysLog).catch(() => {
-          throw new Error('更新失败')
+        updateIpDetail(sysLog).then(() => {
+          this.$notify({
+            title: '更新成功',
+            message: '成功更新' + sysLog.ip + '为: ' + value,
+            type: 'success',
+            duration: 3000
+          })
         })
         for (let i = 0; i < this.pageInfo.list.length; i++) {
           if (this.pageInfo.list[i].ip === sysLog.ip) {
             this.pageInfo.list[i].detail = sysLog.detail
           }
         }
-        this.$notify({
-          title: '更新成功',
-          message: '成功更新' + sysLog.ip + '为: ' + value,
-          type: 'success',
-          duration: 3000
-        })
-      }).catch(() => {
-        this.$notify.error({
-          title: '更新失败',
-          message: '请重试',
-          duration: 3000
-        })
       })
     }
   }
@@ -120,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 .log {
   &-container {
-    margin: 16px;
+    margin: 14px;
     .pagination{
       margin-top: 11px;
       text-align: center;
@@ -130,5 +123,10 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.shadow{
+  box-shadow: 0 0 6px rgba(0, 0, 0, .06);
+  border-radius: 8px;
+  padding: 0.5%
 }
 </style>

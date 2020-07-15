@@ -148,12 +148,12 @@ export default {
       const date = new Date()
       const nowX = []
       let hour = date.getHours()
-      for (let i = 0; i < 12; i++) {
-        hour += 2
+      for (let i = 0; i < 24; i++) {
+        hour += 1
         if (hour >= 24) {
           hour -= 24
         }
-        nowX.push(hour + ':00')
+        nowX.push(hour + ':' + date.getMinutes())
       }
       return nowX
     },

@@ -17,8 +17,22 @@ export function getInfo() {
 
 export function getPic() {
   return request({
-    url: '/admin/getPic',
+    url: '/admin/pic',
     method: 'get'
   })
 }
 
+export function getRes() {
+  return request({
+    url: '/admin/res',
+    method: 'get'
+  })
+}
+
+export function putRes(data) {
+  return request({
+    url: '/admin/res',
+    method: 'post',
+    data
+  })
+}

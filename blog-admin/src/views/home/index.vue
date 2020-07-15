@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div class="dashboard-container shadow">
     <component :is="currentRole" />
   </div>
 </template>
@@ -32,11 +32,16 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
   &-container {
-    margin: 30px;
+    margin: 14px;
   }
   &-text {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.shadow{
+  box-shadow: 0 0 6px rgba(0, 0, 0, .06);
+  border-radius: 8px;
+  padding: 0.5%
 }
 </style>

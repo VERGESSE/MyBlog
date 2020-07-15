@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueCropper from 'vue-cropper'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
@@ -35,6 +36,8 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(VueAxios, axios)
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
+
+Vue.use(VueCropper)
 
 Vue.config.productionTip = false
 
