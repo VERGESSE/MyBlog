@@ -13,6 +13,8 @@ import top.vergessen.blog.exception.ExceptionEnum;
 import top.vergessen.blog.mapper.MessageMapper;
 import top.vergessen.blog.service.MessageService;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Vergessen
  * @date 2020/7/4 21:43.
@@ -29,15 +31,29 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void addMessage(Message message) {
+        message.setIsShow((byte) 0);
+        message.setCreateTime(LocalDateTime.now());
+        message.setId(System.nanoTime());
+        messageMapper.insertSelective(message);
+    }
+
+    @Override
     public PageInfo<Message> selectPageMessage(Integer page, Integer size) {
         return PageHelper.startPage(page, size)
                 .doSelectPageInfo(messageMapper::selectAllOrderByTime);
     }
 
     @Override
+    public PageInfo<Message> selectPageMessageIsshow(Integer page, Integer size) {
+        return PageHelper.startPage(page, size)
+                .doSelectPageInfo(messageMapper::selectAllOrderByTimeIsShoe);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateByMessage(Message message) {
-        if (message.getIp() == null){
+        if (message.getId() == null){
             throw new BlogException(ExceptionEnum.MESSAGE_UPDATE_ERROR);
         }
         int update = messageMapper.updateByPrimaryKeySelective(message);

@@ -10,7 +10,7 @@
     <result column="parent_comment_id" jdbcType="BIGINT" property="parentCommentId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="is_effective" jdbcType="TINYINT" property="isEffective" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />

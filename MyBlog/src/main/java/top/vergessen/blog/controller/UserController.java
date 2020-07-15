@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.vergessen.blog.auth.CheckLogin;
 import top.vergessen.blog.domain.Picture;
+import top.vergessen.blog.domain.Resource;
 import top.vergessen.blog.domain.vo.UserInfoVO;
 import top.vergessen.blog.exception.BlogException;
 import top.vergessen.blog.exception.ExceptionEnum;
@@ -15,6 +16,8 @@ import top.vergessen.blog.service.ResourceService;
 import top.vergessen.blog.util.JwtOperator;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -51,8 +54,8 @@ public class UserController {
         @RequestParam String password
     ){
         // 验证用户名密码
-        if (Objects.equals(username, resourceService.getRes("username"))
-            && Objects.equals(password, resourceService.getRes("password"))){
+        if (Objects.equals(username, resourceService.getRes("用户名"))
+            && Objects.equals(password, resourceService.getRes("密码"))){
             HashMap<String, Object> userInfo = Maps.newHashMap();
             userInfo.put("username", username);
             userInfo.put("auth","root");
@@ -70,11 +73,33 @@ public class UserController {
     @CheckLogin
     public ResponseEntity<UserInfoVO> getUserInfo(){
         return ResponseEntity.ok(UserInfoVO.builder()
-                .name(resourceService.getRes("username"))
-                .avatar(resourceService.getRes("avatar"))
+                .name(resourceService.getRes("用户名"))
+                .avatar(resourceService.getRes("头像"))
                 .introduction(resourceService.getRes("introduction"))
                 .roles(resourceService.getRes("roles"))
                 .build());
+    }
+
+    /**
+     * 获取全部的博客资源信息
+     */
+    @GetMapping("res")
+    @CheckLogin
+    public ResponseEntity<List<Resource>> getAllRes(){
+        return ResponseEntity.ok(resourceService.getAllRes());
+    }
+
+    /**
+     * 更新资源信息（不允许添加）
+     * @param resources 资源信息
+     */
+    @PostMapping("res")
+    @CheckLogin
+    public ResponseEntity<Void> putRes(@RequestBody List<Resource> resources){
+        for (Resource resource : resources) {
+            resourceService.putRes(resource.getResKey(),resource.getValue());
+        }
+        return ResponseEntity.ok(null);
     }
 
     /**

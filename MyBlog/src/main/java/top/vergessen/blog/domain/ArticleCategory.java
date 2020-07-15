@@ -20,8 +20,8 @@ public class ArticleCategory {
      * 分类id
      */
     @Id
-    @Column(name = "category_id")
-    private Long categoryId;
+    @Column(name = "category_name")
+    private String categoryName;
 
     /**
      * 文章id
@@ -29,12 +29,6 @@ public class ArticleCategory {
     @Id
     @Column(name = "article_id")
     private Long articleId;
-
-    /**
-     * 更新时间
-     */
-    @Column(name = "modified_by")
-    private LocalDateTime modifiedBy;
 
     /**
      * 创建时间

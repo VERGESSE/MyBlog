@@ -1,6 +1,8 @@
 package top.vergessen.blog.service;
 
-import java.util.Map;
+import top.vergessen.blog.domain.Resource;
+
+import java.util.List;
 
 /**
  * 资源映射服务
@@ -11,7 +13,7 @@ public interface ResourceService {
 
     /**
      * 根据传入的key获取对应的资源值
-     * @param key
+     * @param key key
      * @return
      */
     String getRes(String key);
@@ -20,12 +22,12 @@ public interface ResourceService {
      * 获取资源的映射值
      * @return 全部资源值
      */
-    Map<String, String> getAllRes();
+    List<Resource> getAllRes();
 
     /**
      * 根据传入信息新增或修改资源值
-     * @param key
-     * @param value
+     * @param key key
+     * @param value key
      * @return 返回是否添加成功
      */
     boolean putRes(String key, String value);

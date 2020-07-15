@@ -8,9 +8,30 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
     <result column="is_top" jdbcType="TINYINT" property="isTop" />
     <result column="traffic" jdbcType="INTEGER" property="traffic" />
     <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
   </resultMap>
+
+    <select id="getArticleByCategoryAndSearchAndPage" resultType="top.vergessen.blog.domain.ArticleInfo">
+      SELECT id,title,summary,tags,is_top,traffic,create_by
+      FROM tbl_article_info
+      WHERE id = id
+      <if test="category != ''">
+        AND id IN (SELECT article_id FROM tbl_article_category WHERE category_name = #{category})
+      </if>
+      <if test="search != ''">
+        AND (title LIKE CONCAT('%',#{search},'%') OR summary LIKE CONCAT('%',#{search},'%') OR tags LIKE CONCAT('%',#{search},'%'))
+      </if>
+        ORDER BY create_by DESC
+      <if test="isTop == true">
+          ,is_top DESC
+      </if>
+    </select>
+
+    <update id="increaseViewNum">
+      UPDATE tbl_article_info SET traffic = traffic + 1 WHERE id = #{articleId};
+    </update>
 </mapper>

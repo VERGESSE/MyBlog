@@ -48,7 +48,6 @@ public class JwtOperator {
                 .parseClaimsJws(token)
                 .getBody();
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
-            log.error("token解析错误", e);
             throw new IllegalArgumentException("Token invalided.");
         }
     }

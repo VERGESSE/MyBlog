@@ -3,48 +3,41 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Ozod - Creative Portfolio Template">
-        <meta name="keywords" content="Html, Css, jQuery, JavaScript, Ozod, responsive, onepage, personal, Portfolio, design, creative, template">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="MyBlog 一个开源的的博客项目 By Vergessen">
+        <meta name="keywords" content="Vergessen Java Spring Golang 编程 开源 学习ing 博客 Vue">
 
         <!-- Title -->
-        <title th:text="${category}+' - Vergessen'">博客主页 - Vergessen</title>
+        <title th:text="${category}+' - '+${username}"></title>
         <!-- Favicon -->
-        <link rel="icon" href="https://blog-vergessen.oss-cn-beijing.aliyuncs.com/blog/20200301212956.png">
-        <!-- Google Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800">
+        <link rel="icon" th:href="@{${logo}}">
 
-        <!-- Font Awesome Css -->
-        <!--<link rel="stylesheet" href="../css/font-awesome.min.css">-->
-        <link href="//libs.baidu.com/fontawesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Flaticon -->
-        <link rel="stylesheet" href="fonts/flaticon.css">
-        <!-- Bootstrap 4 Css -->
-        <!--<link rel="stylesheet" href="../css/bootstrap.min.css">-->
+        <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/fonts/flaticon.css">
         <!-- Main Style Css -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/css/main.css">
         <!--mycss Style Css-->
-        <link rel="stylesheet" href="css/mycss.css">
+        <link rel="stylesheet" href="/css/mycss.css">
 		<!-- Inner Pages Style Css -->
-        <link rel="stylesheet" href="css/inner-pages.css">
-
-        <!--[if lt IE 9]>
-        <script src="https://cdn.bootcdn.net/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://cdn.bootcdn.net/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <!--<link rel="stylesheet" href="css/style2.css">-->
+        <link rel="stylesheet" href="/css/inner-pages.css">
         <style>
             canvas {
                 position: fixed;
                 width: 100%;
-                z-index: -1000;
+                z-index: -1;
                 overflow: hidden;
                 opacity: revert;
                 -ms-scroll-snap-x: revert;
-                background-repeat:no-repeat;
-                background-attachment:fixed;
+            }
+            .blog .post-img img{
+                border-radius: 0;
+            }
+            .blog{
+                min-height: 0;
             }
         </style>
         <script>
@@ -52,7 +45,8 @@
                 // 搜索按钮
                 $('#searchBtn').click(function () {
                     let searchContent = $("#searchContent").val();
-                    window.location = "../search/" + searchContent;
+                    if (searchContent)
+                        window.location = "/search/" + searchContent;
                 });
             }
         </script>
@@ -73,14 +67,14 @@
 
         <!-- ========== Start Page Title ========== -->
         <canvas id="canvas"></canvas>
-        <div class="page-title" id="page-title">
+        <div class="page-title" id="page-title" th:style="'background: url('+${blogImg}+')top center no-repeat; background-size: cover;'">
 			<div class="overlay">
 				<div class="container">
 					<div class="content">
 						<h2>Blog Posts</h2>
 						<ul class="list-unstyled">
-							<li><a href="../">Home</a></li>
-                            <li class="two"><a href="/blog">Blog</a></li>
+							<li><a href="/">Home</a></li>
+                            <li class="two"><a href="/blog/all">Blog</a></li>
 							<li id="category" th:text="${category}"></li>
 						</ul>
 					</div>
@@ -90,11 +84,9 @@
 
         <!-- ========== End Page Title ========== -->
 
-        <div class="row navigation">
+        <div class="row blog-navigition">
             <div class="col-lg-3 col-sm-12"></div>
-
-            <div class="blog col-lg-3 col-sm-12" id="blog-search" style="margin-left: 50px;
-                               padding-top: 0;padding-bottom:0; padding-right: 20px;">
+            <div class="blog col-lg-3 col-sm-12" id="blog-search" style="margin-left: 50px;padding-right: 20px;">
                 <div class="blog-sidebar">
                     <div class="sidebar-search">
                         <div class="form-group" style="margin-bottom: 3px">
@@ -107,22 +99,22 @@
 
             <div class="col-lg-3 col-sm-12" style="text-align:center">
                 <div class="dropdown menu-category" style="float: left;margin-left: 60px">
-                    <button type="button" class="btn dropdown-toggle menu-btn" id="dropdownMenu1" data-toggle="dropdown">分类
-                        <span class="caret"></span>
+                    <button type="button" class="btn dropdown-toggle menu-btn" id="dropdownMenu1" data-toggle="dropdown">
+                        分类<span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu menu-ul" role="menu" aria-labelledby="dropdownMenu1">
                         <li role="presentation" >
-                            <a role="menuitem" tabindex="-1" href="../blog">&nbsp全部</a>
+                            <a role="menuitem" tabindex="-1" href="/blog/all">&nbsp全部</a>
                         </li>
                         <li role="presentation" th:each="item,stat:${categorys}">
-                            <a role="menuitem" tabindex="-1" href="#" th:href="@{'../blog/'+${item.id}}" th:text="'&nbsp'+${item.name}"></a>
+                            <a role="menuitem" tabindex="-1" href="#" th:href="@{'/blog/'+${item.name}}" th:text="'&nbsp'+${item.name}"></a>
                         </li>
                     </ul>
                 </div>
                 <ul class="pagination paging" >
                     <li class="page-item"><a class="page-link" href="#" th:href="@{${Previous}}">Previous</a></li>
                     <li class="page-item"><a class="page-link" href="#" th:href="@{${Next}}">
-                        &nbsp&nbsp&nbsp&nbspNext&nbsp&nbsp&nbsp </a></li>
+                        &nbsp&nbsp&nbspNext&nbsp&nbsp </a></li>
                 </ul>
             </div>
 
@@ -133,49 +125,58 @@
 			<div class="blog" id="blog">
 				<div class="container">
 					<div class="row" id="articleList-p">
-                        <div class="col-md-4" th:each="item,stat:${articles}">
-                            <div class="post">
+                        <div class="col-lg-4 col-md-12 col-xs-12" th:each="item:${articles}">
+                            <div class="post" >
                                 <!-- Post Image -->
                                 <div class="post-img">
-                                    <img src="" th:src="@{${item.pictureUrl}}" class="img-fluid">
+                                    <img class="img-fluid article-pic" th:src="@{${item.pictureUrl}}">
                                 </div>
                                 <!-- Post Content -->
-                            <div class="post-content">
-                                <div class="post-date" th:text="${#temporals.format(item.createBy, 'yyyy-MM-dd HH:mm:ss')}">加载中</div>
-                                <div class="post-title">
-                                    <a href="" th:href="@{'../blog-single/'+${item.id}}" target="_blank"><h4 th:text="${item.title}"></h4></a>
+                                <div class="post-content">
+                                    <div class="post-title">
+                                        <a th:href="@{'/article/v/'+${item.id}}" target="_blank">
+                                            <h4>
+                                                <span th:text="${item.title}"></span>
+                                            </h4>
+                                        </a>
                                     </div>
-                                <div class="post-text">
-                                    <p th:text="${item.summary}"></p>
+                                    <div class="post-text">
+                                        <p th:text="${item.summary}"></p>
                                     </div>
-                                <a href="" th:href="@{'../blog-single/'+${item.id}}" target="_blank" class="post-more">查看全文</a>
+                                    <div style="height: 50px">
+                                        <span style="float: left;">
+                                            <div>
+                                                <i class="fa fa-calendar" aria-hidden="true" style="color: #b3a341"></i>
+                                                <span class="post-date" th:text="${#temporals.format(item.createBy, 'yyyy-MM-dd')}"></span>
+                                                <i class="fa fa-eye" aria-hidden="true" style="color: #b3a341;margin-left: 10px"></i>
+                                                <span class="post-date" th:text="${item.traffic}"></span>
+                                            </div>
+                                            <i class="fa fa-tags" aria-hidden="true" style="color: #b3a341"></i>
+                                            <span th:each="tag,index:${item.tags}">
+                                                <a th:href="@{'/blog/'+${tag}}" target="_blank">
+                                                    <span th:if="${index.index < 3}" th:text="${tag}" class="post-tag"></span>
+                                                </a>
+                                            </span>
+                                        </span>
+                                        <span style="float: right;">
+                                            <a th:href="@{'/article/v/'+${item.id}}" target="_blank" class="post-more">阅读全文</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 					</div>
 				</div>
-                <div style="width: 100%;color: #dcbc8f;font-size: 10px;text-align: center; " >
-                    © 2020-2020 vergessen.top 版权所有 ICP证：
-                    <a href="http://beian.miit.gov.cn/" target="_blank" style="color: #f9c828">津ICP备19009700号</a>
-                </div>
 			</div>
+            <div class="footer" th:utext="${records}">
+            </div>
 
 
 			<!-- ========== End Blog ========== -->
 
         <!-- ========== Js ========== -->
-        <script src="js/bk.js"></script>
-        <!-- jQuery -->
-        <!--<script src="../js/jquery-3.2.1.min.js"></script>-->
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Popper Js  -->
-    	<!--<script src="../js/popper.min.js"></script>-->
-    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.4.2/cjs/popper.min.js"></script>
-    <!-- Bootstrap 4 Js -->
-        <!--<script src="../js/bootstrap.min.js"></script>-->
-    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <!-- Custom Js -->
-        <script src="js/custom.js"></script>
+        <script src="/js/bk.js"></script>
+        <script src="/js/custom.js"></script>
         <!--<script src="../js/pages/blog.js"></script>-->
     </body>
 </html>

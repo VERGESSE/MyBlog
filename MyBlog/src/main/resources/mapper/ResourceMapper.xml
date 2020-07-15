@@ -10,4 +10,9 @@
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
     <result column="value" jdbcType="LONGVARCHAR" property="value" />
   </resultMap>
+    <select id="selectAllOrderByTime" resultType="top.vergessen.blog.domain.Resource">
+        SELECT res_key,value
+        FROM tbl_resource
+        ORDER BY create_by
+    </select>
 </mapper>

@@ -35,6 +35,11 @@ public class ArticleInfo {
     private String summary;
 
     /**
+     * 文章标签，分类的集合字符串
+     */
+    private String tags;
+
+    /**
      * 文章是否置顶，0为否，1为是
      */
     @Column(name = "is_top")

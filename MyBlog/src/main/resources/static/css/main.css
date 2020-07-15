@@ -134,9 +134,10 @@ h6 {
     min-width: 155px;
     color: #f9c828;
     padding: 16px 0;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     text-transform: uppercase;
+    margin-bottom: 14px;
     letter-spacing: 1px;
     text-align: center;
     background: transparent;
@@ -196,10 +197,8 @@ section.active {
 }
 
 .main-img {
-    background: url('https://www.vergessen.top/image/home.jpg') top center no-repeat;
-    background-size: cover;
     height: calc(100vh - 48px);
-    opacity: .6;
+    opacity: .7;
     border: 3px solid #1c1c1d;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
@@ -215,7 +214,7 @@ section.active {
 
 ::-webkit-scrollbar {
     width: 5px;
-    height: 15px;
+    height: 14px;
 }
 
 ::-webkit-scrollbar-track {
@@ -663,6 +662,7 @@ section.active {
     border-bottom-width: 3px;
     border-radius: 4px;
     margin-bottom: 30px;
+    min-height: 190px;
 }
 
 .services .service.two,
@@ -883,7 +883,6 @@ section.active {
     position: relative;
     overflow: hidden;
     border-radius: 4px;
-    margin-bottom: 30px;
 }
 
 .portfolio .portfolio-content .item img {
@@ -932,7 +931,7 @@ section.active {
 .portfolio .portfolio-content .item .overlay .item-title,
 .portfolio .portfolio-content .item .overlay .item-category span {
     position: absolute;
-    top: 42%;
+    top: 35%;
     left: 50%;
     -webkit-transform: translateX(-50%);
     -moz-transform: translateX(-50%);
@@ -942,7 +941,7 @@ section.active {
     display: inline-block;
     color: #fff;
     margin: 0;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .portfolio .portfolio-content .item .overlay .icon-img {
@@ -981,6 +980,7 @@ section.active {
 
 .blog {
     width: 100%;
+    min-height: 300px;
     /*padding-top: 16px;*/
     /*padding-bottom: 60px;*/
     overflow: hidden;
@@ -999,29 +999,27 @@ section.active {
 .blog .post {
     border-radius: 16px;
     overflow: hidden;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     z-index: 0;
 }
 
 .blog .post-img {
     display: flex;
     overflow: hidden;
-    height: 240px;
-    margin: auto;
+    width: 100%;
     align-items: center; /*垂直居中*/
     justify-content: center; /*水平居中*/
 }
 
 .blog .post-img img {
-    margin: auto;
     border-radius: 15px;
     align-items: center; /*垂直居中*/
     justify-content: center; /*水平居中*/
 }
 
 .blog .post img {
-    margin: auto;
-    border-radius: 6px;
+    width: 100%;
+    object-fit: cover;
     align-items: center; /*垂直居中*/
     justify-content: center; /*水平居中*/
 }
@@ -1055,7 +1053,7 @@ section.active {
 @media (min-width: 666px){
     .blog .post .post-content {
         position: relative;
-        padding: 18px 18px;
+        padding: 13px 13px;
         background: #1a1a1b;
         border: 2px solid #1c1c1d;
         border-radius: 4px;
@@ -1066,8 +1064,22 @@ section.active {
     color: #f9c828;
     font-size: 14px;
     letter-spacing: 1.2px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
+
+.blog .post .post-content .post-tag {
+    border: #ffc107 1px dashed;
+    border-radius: 5px;
+    background-color: #1a1a1b;
+    color: #c0c8ed;
+    font-size: 8px;
+}
+
+.blog .post .post-content .post-tag:hover {
+    background-color: #f9c828;
+}
+
 
 .blog .post .post-content .post-title h4 {
     color: #fff;
@@ -1101,14 +1113,14 @@ section.active {
 
 .blog .post .post-content .post-more {
     display: inline-block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 10px 18px;
+    padding: 6px 7px;
     background-color: transparent;
     color: #f9c828;
     border: 1px solid #f9c828;
-    border-radius: 4px;
-    margin-top: 15px;
+    border-radius: 5px;
+    margin-top: 12px;
 }
 
 .blog .post .post-content .post-more:hover {
@@ -1152,7 +1164,7 @@ section.active {
 
 .contact .contact-box {
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .contact .contact-box:last-of-type {
@@ -1162,13 +1174,12 @@ section.active {
 .contact .contact-box .title-box {
     display: inline-block;
     color: #f9c828;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: .3px;
     text-align: center;
     border-radius: 24px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
+    margin-bottom: 6px;
 }
 
 .contact .contact-box .content-box p {
@@ -1253,7 +1264,6 @@ section.active {
     position: absolute;
     top: 13px;
     left: 12px;
-    width: 100%;
     margin-bottom: 0;
     font-weight: 400;
     cursor: text;
@@ -1397,11 +1407,11 @@ section.active {
 
     /*=========== Contact ============*/
     .contact .contact-boxes {
-        margin-bottom: 35px;
+        margin-bottom: 10px;
     }
 
     .contact .contact-box .title-box {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .contact .contact-box .content-box p {
@@ -1435,7 +1445,7 @@ section.active {
 
     /*=========== Contact ============*/
     .contact .contact-boxes {
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
 
 }
@@ -1514,7 +1524,7 @@ section.active {
 
     /*=========== Contact ============*/
     .contact .contact-boxes {
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
 }
 
@@ -1525,6 +1535,10 @@ section.active {
         margin-left: 0;
         margin-top: 0;
         height: 100vh;
+    }
+
+    .blog .post .post-content .post-more {
+        margin-right: 10px;
     }
 
     .area-bg {
@@ -1779,6 +1793,7 @@ section.active {
     /*=========== Blog ============*/
     .blog .post .post-content .post-date,
     .blog .post .post-content .post-title h4 {
-        font-size: 14px;
+        margin-top: 3px;
+        font-size: 17px;
     }
 }

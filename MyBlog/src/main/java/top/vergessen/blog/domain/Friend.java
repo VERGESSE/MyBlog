@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Table(name = "tbl_friends")
-public class Friends {
+public class Friend {
     /**
      * 主键
      */
@@ -43,6 +43,16 @@ public class Friends {
      * 友链头像
      */
     private String photo;
+
+    /**
+     * 审核状态，通过为1，默认为0
+     */
+    private Byte state;
+
+    /**
+     * 申请人邮箱
+     */
+    private String email;
 
     /**
      * 友链修改时间

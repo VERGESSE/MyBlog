@@ -40,11 +40,12 @@ mybatis:
     map-underscore-to-camel-case: true
 logging:
   level:
-    top.vergessen.blog.mapper: trace
+    top.vergessen.blog: info
 
 imgGo:
   serverUrl: https://www.vergessen.top
   auth: HYSVERGESSEN@955
+  group: blog
 # jwt配置
 jwt:
   # 加密掩码，建议定期修改,长度需要大于256位

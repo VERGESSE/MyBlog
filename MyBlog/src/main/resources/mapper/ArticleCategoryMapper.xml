@@ -5,9 +5,14 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="category_id" jdbcType="BIGINT" property="categoryId" />
+    <id column="category_name" jdbcType="VARCHAR" property="categoryName" />
     <id column="article_id" jdbcType="BIGINT" property="articleId" />
-    <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
   </resultMap>
+
+    <update id="updateCategoryName">
+        UPDATE tbl_article_category
+        SET category_name = #{newName}
+        WHERE category_name = #{oldName}
+    </update>
 </mapper>

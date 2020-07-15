@@ -35,6 +35,16 @@ public class GoodArticle {
     private String url;
 
     /**
+     * 审核状态，通过为1，默认为0
+     */
+    private Byte state;
+
+    /**
+     * 申请人邮箱
+     */
+    private String email;
+
+    /**
      * 文章链接修改时间
      */
     @Column(name = "modified_by")

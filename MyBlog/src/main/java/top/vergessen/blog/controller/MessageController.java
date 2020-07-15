@@ -11,6 +11,8 @@ import top.vergessen.blog.exception.BlogException;
 import top.vergessen.blog.exception.ExceptionEnum;
 import top.vergessen.blog.service.MessageService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Vergessen
  * @date 2020/7/6 23:01.
@@ -32,7 +34,23 @@ public class MessageController {
     }
 
     /**
-     * 分页获取留言信息
+     * 前台添加留言信息
+     * @param message 留言信息
+     * @param request 用于获取留言者IP
+     */
+    @PostMapping("msg")
+    public ResponseEntity<Void> addMessage(
+            @RequestBody Message message,
+            HttpServletRequest request){
+        // 获取留言者IP
+        String ip = request.getHeader("X-Real-IP");
+        message.setIp(ip);
+        messageService.addMessage(message);
+        return ResponseEntity.ok(null);
+    }
+
+    /**
+     * 分页获取留言信息 (展示中未展示全部显示)
      * @param page 分页的页码，第一页为1，小于1默认取第一页
      * @param size 每页的条数
      * @return 分页后的数据
@@ -40,13 +58,19 @@ public class MessageController {
     @GetMapping("msg")
     @CheckLogin
     public ResponseEntity<PageInfo<Message>> getMsg(Integer page, Integer size){
-        if (page <= 0 ){
-            page = 1;
-        }
-        if (size < 1){
-            size = 1;
-        }
         PageInfo<Message> msgs = messageService.selectPageMessage(page, size);
+        return ResponseEntity.ok(msgs);
+    }
+
+    /**
+     * 分页获取留言信息 (只获取展示中)
+     * @param page 分页的页码，第一页为1，小于1默认取第一页
+     * @param size 每页的条数
+     * @return 分页后的数据
+     */
+    @GetMapping("message")
+    public ResponseEntity<PageInfo<Message>> getMsgIsShow(Integer page, Integer size){
+        PageInfo<Message> msgs = messageService.selectPageMessageIsshow(page, size);
         return ResponseEntity.ok(msgs);
     }
 
@@ -55,7 +79,7 @@ public class MessageController {
      * @param message 留言信息
      * @return 是否修改成功
      */
-    @PutMapping("/msg")
+    @PutMapping("msg")
     @CheckLogin
     public ResponseEntity<Void> changeShow(@RequestBody Message message){
         Byte isShow = message.getIsShow();
@@ -75,7 +99,7 @@ public class MessageController {
      * @param message 留言信息
      * @return 是否删除成功
      */
-    @DeleteMapping("/msg")
+    @DeleteMapping("msg")
     @CheckLogin
     public ResponseEntity<Void> deleteMsg(@RequestBody Message message){
         if(!messageService.deleteMsgById(message)){

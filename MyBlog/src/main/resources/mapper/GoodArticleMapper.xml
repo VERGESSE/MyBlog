@@ -8,7 +8,17 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
   </resultMap>
+
+
+    <select id="selectAllLinks" resultType="top.vergessen.blog.domain.GoodArticle">
+      select id,title,url,create_by,email
+      FROM tbl_good_article
+      WHERE state = #{state}
+      ORDER BY create_by DESC
+    </select>
 </mapper>

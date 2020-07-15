@@ -13,7 +13,25 @@
   </resultMap>
 
     <select id="getRandomPic" resultMap="BaseResultMap">
-        SELECT picture_url,picture_url_small FROM tbl_picture
+        SELECT picture_url,picture_url_small
+        FROM tbl_picture
         WHERE picture_type = #{type} ORDER BY rand() LIMIT #{num}
+    </select>
+
+    <!-- 随机度不够高。但是上面的实现数据量大时性能可能差一点 -->
+    <!--<select id="getRandomPic" resultMap="BaseResultMap">-->
+        <!--SELECT picture_url,picture_url_small-->
+        <!--FROM tbl_picture-->
+        <!--WHERE picture_type = #{type} AND id >= (-->
+            <!--((SELECT MAX(id) FROM tbl_picture WHERE picture_type = #{type})-->
+            <!-- - (SELECT MIN(id) FROM tbl_picture WHERE picture_type = #{type})) * RAND()-->
+            <!--+ (SELECT MIN(id) FROM tbl_picture WHERE picture_type = #{type})-->
+            <!--) LIMIT #{num};-->
+    <!--</select>-->
+
+    <select id="getPicPageByType" resultType="top.vergessen.blog.domain.Picture">
+        SELECT id,picture_url,picture_url_small,create_by
+        FROM tbl_picture
+        WHERE picture_type = #{type} ORDER BY create_by DESC
     </select>
 </mapper>

@@ -13,10 +13,16 @@ import java.util.List;
 public interface CategoryTechnologyService {
 
     /**
-     * 获取全部分类信息
+     * 获取全部分类信息 按文章数量倒序排序
      * @return 分类信息列表
      */
     List<CategoryInfo> selectAllCategory();
+
+    /**
+     * 获取文章数量不为0的分类 按文章数量倒序排序
+     * @return 分类信息列表
+     */
+    List<CategoryInfo> selectAllCategoryNumNotZero();
 
     /**
      * 新增分类
@@ -32,6 +38,7 @@ public interface CategoryTechnologyService {
 
     /**
      * 删除分类信息,如果图标变化会删除原图片
+     * 如果该分类对应文章的标签只有这一个，文章不会删除，但是标签清空
      * @param categoryInfo 需要删除的分类信息
      */
     void deleteCategory(CategoryInfo categoryInfo);

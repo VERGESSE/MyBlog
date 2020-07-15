@@ -44,7 +44,6 @@
     const canvas = {
         init() {
             this.elem = document.getElementById("canvas");
-            // document.body.appendChild(this.elem);
             this.width = this.elem.width = this.elem.offsetWidth;
             this.height = this.elem.height = window.innerHeight;
             return this.elem.getContext("2d");

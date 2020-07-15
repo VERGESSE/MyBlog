@@ -15,6 +15,8 @@ import top.vergessen.blog.util.UserAgentUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -33,9 +35,9 @@ public class ForeInterceptor implements HandlerInterceptor {
     private RestTemplate restTemplate;
 
     /**
-     * 缓存最近最多使用的60个ip的地址信息
+     * 缓存最近最多使用的666个ip的地址信息
      */
-    private final LRUCache<String, String> ipAddrCache = new LRUCache<>(60);
+    private final LRUCache<String, String> ipAddrCache = new LRUCache<>(666);
 
     /**
      * 日志记录线程池
@@ -49,8 +51,8 @@ public class ForeInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         // 访问者的IP
         String ip = request.getHeader("X-Real-IP");
-        // 访问地址
-        String url = request.getRequestURL().toString();
+        // 访问地址 使用UTF-8解码
+        String url = URLDecoder.decode(request.getRequestURL().toString(), StandardCharsets.UTF_8);
         //得到用户的操作系统以及浏览器信息
         String userBrowser = UserAgentUtil.getOsAndBrowserInfo(request.getHeader("User-Agent"));
 
@@ -77,7 +79,8 @@ public class ForeInterceptor implements HandlerInterceptor {
             // 保存日志信息
             sysLog.setRemark(method.getName());
         } else {
-            String uri = request.getRequestURI();
+            // 使用UTF-8解码
+            String uri = URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
             sysLog.setRemark(uri);
         }
 
@@ -95,7 +98,7 @@ public class ForeInterceptor implements HandlerInterceptor {
             }
             String detail = sysLogService.selectDetailByIp(sysLog.getIp());
             sysLog.setAddr(addr);
-            sysLog.setDetail(detail);
+            sysLog.setDetail(detail == null ? addr : detail);
             sysLogService.addLog(sysLog);
         });
     }

@@ -35,6 +35,11 @@ public class Message {
     private String email;
 
     /**
+     * 留言详细信息
+     */
+    private String message;
+
+    /**
      * 是否展示，若展示则为1
      */
     @Column(name = "is_show")
@@ -50,9 +55,4 @@ public class Message {
      */
     @Column(name = "create_time")
     private LocalDateTime createTime;
-
-    /**
-     * 留言详细信息
-     */
-    private String message;
 }

@@ -49,9 +49,9 @@ public class SysLogServiceImpl implements SysLogService {
         List<Integer> res = new ArrayList<>(12);
         LocalDateTime now = LocalDateTime.now();
         // 获取每个时间段的访客数
-        for (int i = 12; i > 0; i--) {
-            String time1 = now.minusHours(2*i).format(dateTimeFormatter);
-            String time2 = now.minusHours(2*(i-1)).format(dateTimeFormatter);
+        for (int i = 24; i > 0; i--) {
+            String time1 = now.minusHours(i).format(dateTimeFormatter);
+            String time2 = now.minusHours(i-1).format(dateTimeFormatter);
             res.add(sysLogMapper.selectCountByTime(time1, time2));
         }
         return res;
@@ -75,7 +75,7 @@ public class SysLogServiceImpl implements SysLogService {
     public String selectDetailByIp(String ip) {
         SysLog sysLog = sysLogMapper.selectOneByIp(ip);
         if (sysLog == null || sysLog.getDetail() == null){
-            return sysLog != null ? sysLog.getAddr() : "暂无";
+            return null;
         }
         return sysLog.getDetail();
     }

@@ -1,166 +1,168 @@
-const backUrl = "https://www.vergessen.top";
-// const backUrl = "http://127.0.0.1:8666";
-
+let host = window.location.host;
+let applyFriendDia = null;
+let applyLinkDia = null;
+let page = 1;
+let msgPage = 1;
 $(document).ready(function () {
-    // $.ajax({
-    //     url: backUrl + "/api/category/list",
-    //     type: "GET",
-    //     dataType: "json",
-    //     success: function (json) {
-    //         $.each(json, function (i, item) {
-    //             $('#categoryInfo').append('' +
-    //                 '<div class="col-xl-4 col-lg-3 col-sm-3" style="margin-bottom: 20px;">\n' +
-    //                 ' <div class="item" style="height: 240px;display: inline-table;">\n' +
-    //                 '   <img class="img-fluid" style="height: 240px;display: inline-table;" src="'+ item.pictureUrl +'">\n' +
-    //                 '   <div class="overlay">\n' +
-    //                 '    <h4 class="item-title">' + item.name + '</h4>\n' +
-    //                 '    <a class="icon-img" href="blog.html?categoryId=' + item.id + '"><i class="fa fa-search-plus"></i></a>\n' +
-    //                 '    <div class="item-category">\n' +
-    //                 '       <span style="color: #f9c828">' + item.number + '</span>\n' +
-    //                 '    </div>\n' +
-    //                 '   </div>\n' +
-    //                 ' </div>\n' +
-    //                 '</div>');
-    //         });
-    //     }
-    // });
-
-    $.ajax({
-        url: backUrl + "/api/article/top",
-        type: "GET",
-        dataType: "json",
-        success: function (json) {
-            $.each(json, function (i, item) {
-                if (i < 6){
-                    let split = item.createBy.split("T");
-                    item.createBy = split[0] + ' ' + split[1];
-                    if (item.isTop)
-                        $('#articles').append('' +
-                            '<div class="col-xl-4 col-lg-12 col-md-4">\n' +
-                            '  <div class="post">\n' +
-                            '   <!-- Post Image -->\n' +
-                            '    <div class="post-img">\n' +
-                            '    <img src="'+ item.pictureUrl +'" class="img-fluid">\n' +
-                            '    </div>\n' +
-                            ' <!-- Post Content -->\n' +
-                            '   <div class="post-content">\n' +
-                            '   <div class="post-date">'+ item.createBy +'</div>\n' +
-                            '  <div class="post-title">\n' +
-                            '   <a href="blog-single/' + item.id + '" target="_blank"><h4><span style="color: yellow;font-size: 18px">【置顶】</span>'+ item.title+'</h4></a>\n' +
-                            '  </div>\n' +
-                            '  <div class="post-text">\n' +
-                            '  <p>'+ item.summary +'</p>\n' +
-                            '  </div>\n' +
-                            '  <a href="blog-single/' + item.id + '" target="_blank" class="post-more">查看更多</a>\n' +
-                            '  </div>\n' +
-                            ' </div>\n' +
-                            ' </div>');
-                    else
-                        $('#articles').append('' +
-                            '<div class="col-xl-4 col-lg-12 col-md-4">\n' +
-                            '  <div class="post">\n' +
-                            '   <!-- Post Image -->\n' +
-                            '    <div class="post-img">\n' +
-                            '    <img src="'+ item.pictureUrl +'" class="img-fluid">\n' +
-                            '    </div>\n' +
-                            ' <!-- Post Content -->\n' +
-                            '   <div class="post-content">\n' +
-                            '   <div class="post-date">'+ item.createBy +'</div>\n' +
-                            '  <div class="post-title">\n' +
-                            '   <a href="blog-single/' + item.id + '" target="_blank"><h4>'+ item.title+'</h4></a>\n' +
-                            '  </div>\n' +
-                            '  <div class="post-text">\n' +
-                            '  <p>'+ item.summary +'</p>\n' +
-                            '  </div>\n' +
-                            '  <a href="blog-single/' + item.id + '" target="_blank" class="post-more">查看更多</a>\n' +
-                            '  </div>\n' +
-                            ' </div>\n' +
-                            ' </div>');
-                }
-            });
-        },
-
-
+    $("#apply-friend").click(function () {
+        if (applyFriendDia == null) {
+            let dia = document.getElementById("apply-friend-dia");
+            applyFriendDia = dia.innerHTML;
+            dia.parentElement.removeChild(dia);
+        }
+        layer.open({
+            title: '友链申请',
+            type: 1,
+            icon: 5,
+            anim: 5,
+            area: ['550px', '700px'],
+            shadeClose: true, //点击遮罩关闭
+            content: applyFriendDia
+        });
     });
 
-    $.ajax({
-        url: backUrl + "/api/friends/list",
-        type: "GET",
-        dataType: "json",
-        success: function (json) {
-            $.each(json, function (i, item) {
-                $('#myfriends').append('' +
-                    '<div class="col-xl-5" style="margin: 0px 9px 20px;' +
-                    '           background-color: #1d1d1d;float:left;box-shadow: 0 3px 12px 0 rgba(255, 255, 255, 0.2);" >\n' +
-                    '   <div style="float:left;">\n' +
-                    '      <a href="' + item.url + '" target="_blank">\n'+
-                    '        <img style="width: 100px;height:100px;display:inline-block;border-radius: 50%;" src="' + item.photo + '" \n' +
-                    '      </a>\n'+
-                    '   </div>\n' +
-                    '   <div class="friendDetail" style="float:left;">\n' +
-                    '      <a href="' + item.url + '" target="_blank">\n'+
-                    '        <p style="padding-top: 20px;padding-left: 10px;width: 220px;overflow:hidden;">' + item.name + '</p>\n' +
-                    '        <p style="padding-left: 10px;width: 220px;overflow:hidden;">' + item.detail + '</p>\n' +
-                    '      </a>\n'+
-                    '   </div>\n' +
-                    '</div>\n');
-                if (i % 2 === 0)
-                    $('#myfriends').append('' +
-                        '<div class="col-xl-1" style="float:left;"></div>');
-            });
+    $("#apply-good-link").click(function () {
+        if (applyLinkDia == null) {
+            let dia = document.getElementById("apply-good-link-dia");
+            applyLinkDia = dia.innerHTML;
+            dia.parentElement.removeChild(dia);
         }
+        layer.open({
+            title: '外链申请',
+            type: 1,
+            icon: 5,
+            anim: 5,
+            area: ['500px', '460px'],
+            shadeClose: true, //点击遮罩关闭
+            content: applyLinkDia
+        });
     });
 
-    //发送留言
-    $("form").submit(function () {
-
-        let name = $('#name').val();
-        let cause = $('#subject').val();
-        let email = $('#email').val();
-        let message = $('#message').val();
-
-        // 不为空才能增加
-        var sendMessage = {
-            name: name,
-            email: email,
-            cause:cause,
-            message: message
-        }
-        // 提交AJAX请求
+    // 加载更多外链
+    $('#load-link').click(function () {
+        page++;
         $.ajax({
-            url: backUrl + "/api/message/add",
-            type: "POST",
+           url: '/article/link?page=' + page + '&size=15',
+           type: "GET",
+           dataType: "json",
+           success: function (json) {
+               layer.msg('加载更多外链成功');
+               // 如果加载完全部外链则把加载更多按钮隐藏
+               if (json.list.length < 15)
+                   $('#load-link').css('visibility','hidden');
+               $.each(json.list, function (i, item) {
+                  $('#link-list').append(
+                     '<div class="col-lg-12" style="margin-bottom: 25px">\n' +
+                     '     <a class="good-link" href="'+ item.url +'" target="_blank">\n' +
+                     '         <span>'+ item.title +'</span>\n' +
+                     '     </a>\n' +
+                     ' </div>'
+                  )
+               });
+           }
+        });
+    });
+
+    // 加载新留言
+    $('#next-msg').click(function () {
+        msgPage++;
+        $.ajax({
+            url: '/message/message?page=' + msgPage + '&size=8',
+            type: "GET",
             dataType: "json",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(sendMessage),
-            success: function () {
-                // 显示成功提示信息
-                alert("发送成功!");
-                window.location.replace(backUrl)
-            },
-            error: function () {
-                alert("发送成功!");
-                window.location.replace(backUrl)
+            success: function (json) {
+                if (json.list.length === 0){
+                    layer.msg('已经到底~~~');
+                    msgPage = 0;
+                    return
+                }
+                layer.msg('成功加载新一批留言');
+                $('#msg-list').empty();
+                $.each(json.list, function (i, item) {
+                    $('#msg-list').append(
+                        '<div class="contact-box">\n' +
+                        '    <h4 class="title-box">'+item.name+'</h4>\n' +
+                        '    <div class="content-box">\n' +
+                        '        <p>\n' +
+                        '            <span><i class="fa fa-commenting"></i>&nbsp&nbsp'+item.message+'</span>\n' +
+                        '        </p>\n' +
+                        '    </div>\n' +
+                        '</div>'
+                    )
+                });
             }
-        })
+        });
     });
 });
 
+function applyFriend() {
+    // 提交AJAX请求
+    $.ajax({
+        url: "/friend/friend",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify({
+            name: $('#friend-nickname').val(),
+            detail: $('#friend-detail').val(),
+            url: $('#friend-url').val(),
+            photo: $('#friend-photo').val(),
+            email: $('#friend-email').val()
+        }),
+        success: function () {
+            layer.close(layer.index);
+            layer.msg('友链申请提交成功,请等待博主审核...');
+        },
+        error: function () {
+            layer.close(layer.index);
+            layer.msg('友链申请提交失败,请重试...');
+        }
+    });
+    return false
+}
 
+function applyLink() {
+    // 提交AJAX请求
+    $.ajax({
+        url: "/article/link",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify({
+            title: $('#link-title').val(),
+            url: $('#link-url').val(),
+            email: $('#link-email').val()
+        }),
+        success: function () {
+            layer.close(layer.index);
+            layer.msg('外链申请提交成功,请等待博主审核...');
+        },
+        error: function () {
+            layer.close(layer.index);
+            layer.msg('外链申请提交失败,请重试...');
+        }
+    });
+    return false
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 新增留言
+function addMessage() {
+    $.ajax({
+        url: "/message/msg",
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify({
+            name: $('#msg-name').val(),
+            message: $('#message').val(),
+            email: $('#msg-email').val()
+        }),
+        success: function () {
+            $('#msg-name').val('');
+            $('#message').val('');
+            $('#msg-email').val('');
+            layer.msg('留言添加成功,博主审核成功后会在首页显示哦。');
+        },
+        error: function () {
+            layer.msg('留言添加失败,请重试...');
+        }
+    });
+    return false
+}

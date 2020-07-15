@@ -13,4 +13,24 @@
     <result column="modified_by" jdbcType="TIMESTAMP" property="modifiedBy" />
     <result column="create_by" jdbcType="TIMESTAMP" property="createBy" />
   </resultMap>
+
+    <select id="selectAllByNumber" resultType="top.vergessen.blog.domain.CategoryInfo">
+        SELECT id,name,number,picture_url,create_by
+        FROM tbl_category_info
+        WHERE is_effective = 1
+        ORDER BY number DESC
+    </select>
+    <select id="selectAllCategoryNumNotZero" resultType="top.vergessen.blog.domain.CategoryInfo">
+        SELECT id,name,number,picture_url,create_by
+        FROM tbl_category_info
+        WHERE is_effective = 1 AND number != 0
+        ORDER BY number DESC
+    </select>
+
+    <update id="increaseNumByTag">
+        UPDATE tbl_category_info SET number = number + 1 WHERE name = #{tag};
+    </update>
+    <update id="decreaseNumByTag">
+        UPDATE tbl_category_info SET number = number - 1 WHERE name = #{tag};
+    </update>
 </mapper>

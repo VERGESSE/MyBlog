@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="MyBlog 一个开源的的博客项目 By Vergessen">
+        <meta name="keywords" content="Vergessen Java Spring Golang 编程 开源 学习ing 博客 Vue">
+
+        <!-- Title -->
+        <title th:text="${article.title}+' - '+${username}"></title>
+        <!-- Favicon -->
+        <link rel="icon" th:href="@{${logo}}">
+
+        <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+        <!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
+        <!--<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>-->
+        <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.1.1/layer.js"></script>
+        <!--引入Markdown转成的Html样式-->
+        <link rel="stylesheet" href="/css/markdown.css">
+        <link rel="stylesheet" href="/css/prism.css">
+        <link rel="stylesheet" href="/fonts/flaticon.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/inner-pages.css">
+        <link rel="stylesheet" href="/css/mycss.css">
+        <style>
+            canvas {
+                position: fixed;
+                width: 100%;
+                z-index: -1000;
+                overflow: hidden;
+                opacity: revert;
+                -ms-scroll-snap-x: revert;
+            }
+            .col-lg-9{
+                padding-left: 1px;
+                padding-right: 1px;
+            }
+            .blog .post-img{
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- ========== Start Loading ========== -->
+        <div class="preloader">
+            <div class="status">
+                <div class="spinner">
+                    <div class="dot1"></div>
+                    <div class="dot2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== End Loading ========== -->
+
+        <!-- ========== Start Page Title ========== -->
+        <canvas id="canvas"></canvas>
+        <div class="page-title" id="page-title" th:style="'background: url('+${blogImg}+')top center no-repeat; background-size: cover;'">
+		    <div class="overlay">
+				<div class="container">
+					<div class="content">
+						<h2>Blog Single</h2>
+						<ul class="list-unstyled">
+                            <li><a href="/">Home</a></li>
+                            <li class="two"><a href="/blog/all">Blog</a></li>
+                            <li class="three"><a href="" th:href="@{'/blog/'+${article.tags.get(0)}}" th:text="${article.tags.get(0)}"></a></li>
+                            <li th:text="${article.title}"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <!-- ========== End Page Title ========== -->
+
+		<!-- ========== Start Blog single ========== -->
+
+
+        <div class="blog" id="blog" style="overflow: visible">
+            <div class="catalog">
+                <div id="catalog">
+
+                </div>
+            </div>
+            <div class="container article-container">
+				<div class="row">
+					<div class="col-lg-9 col-sm-12" style="overflow: scroll">
+						<div class="blog-single">
+							<div class="post">
+								<div class="post-content" >
+                                    <div class="post-title" >
+                                        <a target="_blank"><h4 th:text="${article.title}" style="font-size: 22px;margin-top: 8px;"></h4></a>
+                                    </div>
+                                    <i class="fa fa-calendar" aria-hidden="true" style="color: #b3a341"></i>
+									<span class="post-date" th:text="${#temporals.format(article.createBy, 'yyyy-MM-dd')}"></span>
+                                    <span style="color: #f9c828;text-align:right">
+                                        <i class="fa fa-eye" aria-hidden="true" style="color: #b3a341;margin-left: 10px"></i>
+                                        浏览量<span th:text="${article.traffic}"></span>
+                                    </span>
+
+                                    <!--博文主体-->
+                                    <div id="markdown-body" class="markdown-body" style="margin-top: 30px;" th:utext="${article.content}">
+
+                                    </div>
+
+									<div class="post-footer">
+
+									</div>
+									<div class="post-comments">
+										<h3>评论</h3>
+										<div class="post-comment" id="commentList">
+                                            <div style="margin-top: 15px;border-bottom: 2px solid #1f272a" th:if="${comments.size() > 0}">
+                                                <div style="margin-bottom: 15px;border-bottom: 1px rgba(255,255,255,0.11) solid;padding: 9px;"
+                                                     th:each="item:${comments}">
+                                                    <span style="color: #fffdf2" th:text="${item.name}"></span>
+                                                    <span style="color: #616a6a;margin-bottom: 0;margin-top: 3px;float: right"
+                                                          th:text="${#temporals.format(item.createBy, 'yyyy-MM-dd hh:mm:ss')}"></span>
+                                                    <p th:text="${item.content}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="post-form">
+                                            <h3 id="comment">添加一条评论</h3>
+                                            <form id="form" onsubmit="submitComment()">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="name" name="name" placeholder="昵称" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <input type="email" class="form-control" id="email" name="email" placeholder="邮箱" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" id="content" name="content" placeholder="你的评论" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <button class="main-btn" id="submit" type="button" onclick="submitComment()" name="comment">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+					    </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-12" style="overflow: visible">
+                        <div class="navigation">
+                            <div class="blog-sidebar">
+                                <div class="sidebar-search">
+                                    <div class="form-group">
+                                        <input class="form-control" id="searchContent" name="search-field" placeholder="Search..." required="">
+                                        <button class="search-btn" id="searchBtn" οnclick="onClick()"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                                <div class="sidebar-tags">
+                                    <h4><i class="fa fa-tags" aria-hidden="true" style="color: #a0ada3"></i>&nbsp&nbspTags</h4>
+                                    <ul class="tags-list list-unstyled">
+                                        <li th:each="item:${article.tags}">
+                                            <a th:href="'/blog/'+@{${item}}" th:text="${item}">design</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sidebar-categories">
+                                    <h4>全部分类</h4>
+                                    <ul class="categories-list list-unstyled" id="categoryList">
+                                        <li th:each="item,stat:${categorys}">
+                                            <a href="#" th:href="@{'/blog/'+${item.name}}"
+                                               th:utext="${item.name}+'<span>'+${item.number}+'</span>'"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sidebar-posts" id="articleLasted">
+                                    <h4>最新博文</h4>
+                                    <div class="post-inner" th:each="item,stat:${articleList}">
+                                        <div class="post-image">
+                                            <a th:href="@{'/article/v/'+${item.id}}">
+                                                <img class="img-fluid post-img" src="" th:src="@{${item.pictureUrlSmall}}" href="#"alt/>
+                                            </a>
+                                        </div>
+                                        <div class="post-info">
+                                            <a th:href="@{'/article/v/'+${item.id}}">
+                                                <h5><span th:text="${item.title}"></span></h5>
+                                                <p th:text="${#temporals.format(item.createBy, 'yyyy-MM-dd')}"></p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
+        </div>
+        <div class="footer" th:utext="${records}">
+        </div>
+
+        <!-- ========== End Blog single ========== -->
+
+        <!-- ========== Js ========== -->
+        <script src="/js/bk.js"></script>
+        <script src="/js/custom.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // 搜索按钮
+                $('#searchBtn').click(function () {
+                    let searchContent = $("#searchContent").val();
+                    if (searchContent)
+                        window.location = "/search/" + searchContent;
+                });
+
+                // 生成目录
+                if (window.innerWidth > 1750) {
+                    let markDown = document.getElementById("markdown-body");
+                    let catalog = document.getElementById('catalog');
+                    const nodes  = ['H1','H2','H3','H4','H5','H6'];
+                    let titleIdList = [];
+                    markDown.childNodes.forEach((e, index) => {
+                        if (nodes.includes(e.nodeName)) {
+                            const id = "header-" + index;
+                            titleIdList.push(id);
+                            e.setAttribute("id", id);
+                            let li = document.createElement('div');
+                            li.style.paddingLeft = Number(e.nodeName.substring(1, 2)) * 15 + 'px';
+                            li.style.marginBottom = '8px';
+                            let a = document.createElement('a');
+                            a.href = '#' + id;
+                            a.setAttribute('id', id + '-a');
+                            a.style.fontSize = 18 * (1 - 0.1 * Number(e.nodeName.substring(1, 2))) + 'px';
+                            a.innerHTML = index === 0 ? '目录' : e.innerHTML;
+                            a.style.scrollBehavior= 'smooth';
+                            li.appendChild(a);
+                            catalog.appendChild(li);
+                        }
+                    });
+                    $(window).scroll(function() {
+                        let height = $(window).scrollTop();
+                        let aId = '';
+                        let Dis = height;
+                        titleIdList.forEach((id,index) => {
+                            let top = $('#'+id).offset().top;
+                            let dis = Math.abs(height - top);
+                            if (dis < Dis){
+                                aId = id+'-a';
+                                Dis = dis;
+                                $('#catalog').scrollTop(index * 30)
+                            }
+                            $('#'+id+'-a').css('color', '#a3a38a');
+                        });
+                        $('#'+aId).css('color', '#f9c828');
+                    })
+                }
+            });
+            //添加评论
+            function submitComment() {
+                let name = $.trim($('#name').val());
+                let email = $.trim($('#email').val());
+                let content = $.trim($('#content').val());
+                // 不为空才能增加
+                if(name === '' || name == null || email === '' || email == null || content === '' || content == null){
+                    layer.msg("输入不能为空 !");
+                    return;
+                }
+                let uri = window.location.href.split("/");
+                let articleId = uri[uri.length - 1];
+                // 不为空才能增加
+                let sendMessage = {
+                    articleId:articleId,
+                    name: name,
+                    email: email,
+                    content: content
+                };
+                $.ajax({
+                    url: "/article/comment",
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(sendMessage),
+                    success: function () {
+                        layer.msg('评论成功,刷新页面可查看 ');
+                    },
+                    error: function () {
+                        layer.msg('评论失败，请重试 ！')
+                    }
+                })
+            }
+        </script>
+    </body>
+</html>

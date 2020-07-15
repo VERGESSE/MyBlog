@@ -17,12 +17,26 @@ public interface MessageService {
     Integer selectMessageCount();
 
     /**
+     * 添加评论
+     * @param message 评论信息
+     */
+    void addMessage(Message message);
+
+    /**
      * 分页获取评论
      * @param page 页码第一页为1
      * @param size 每页的条数
-     * @return 分页信息
+     * @return 评论列表
      */
     PageInfo<Message> selectPageMessage(Integer page, Integer size);
+
+    /**
+     * 分页获取展示中的评论
+     * @param page 页码第一页为1
+     * @param size 每页的条数
+     * @return 评论列表
+     */
+    PageInfo<Message> selectPageMessageIsshow(Integer page, Integer size);
 
     /**
      * 根据提供的{@Message}对象更新数据库对应留言id的字段

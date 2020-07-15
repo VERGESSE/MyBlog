@@ -16,4 +16,10 @@ public interface MessageMapper extends Mapper<Message> {
      * @return 留言信息集合
      */
     List<Message> selectAllOrderByTime();
+
+    /**
+     * 分页获取展示中的评论
+     * @return 评论列表
+     */
+    List<Message> selectAllOrderByTimeIsShoe();
 }
