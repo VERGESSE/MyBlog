@@ -12,8 +12,10 @@ import top.vergessen.blog.domain.GoodArticle;
 import top.vergessen.blog.domain.vo.ArticleVO;
 import top.vergessen.blog.service.ArticleService;
 import top.vergessen.blog.service.GoodArticleService;
+import top.vergessen.blog.util.MailTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Vergessen
@@ -27,6 +29,7 @@ public class ArticleController {
 
     private final ArticleService articleService;
     private final GoodArticleService goodArticleService;
+    private final MailTemplate mailTemplate;
 
     /**
      * 创建新的博文
@@ -156,6 +159,16 @@ public class ArticleController {
     public ResponseEntity<Void> updateLink(
             @RequestBody GoodArticle goodArticle ){
         goodArticleService.updateLink(goodArticle);
+        // 如果前端提供了外链状态信息，则为审核通过外链需给申请人发送邮件
+        if (goodArticle.getState() != null && goodArticle.getState() == 1){
+            // 给外链请求人邮件提醒
+            mailTemplate.sendTxtMail(
+                    "外链审核通知",
+                    "您申请的外链: " + goodArticle.getTitle()
+                            + " \n地址: " + goodArticle.getUrl()
+                            + " \n已经通过审核,已在本博客展示。感谢贡献",
+                    goodArticle.getEmail());
+        }
         return ResponseEntity.ok(null);
     }
 
@@ -172,21 +185,27 @@ public class ArticleController {
     }
 
     /**
-     * 前台请求动添加友链，需要审核
+     * 前台请求动添加外链，需要审核
      * @param goodArticle 友链信息
      */
     @PostMapping("link")
-    public ResponseEntity<Void> addFriendCheck(
+    public ResponseEntity<Void> addLinkCheck(
             @RequestBody GoodArticle goodArticle){
         goodArticle.setState((byte) 0);
         goodArticleService.addNewLink(goodArticle);
+        // 给自己邮件提醒
+        mailTemplate.sendTxtMail(
+                "收到新的外链申请",
+                "外链标题: " + goodArticle.getTitle()
+                        + " \n地址: " + goodArticle.getUrl(),
+                mailTemplate.getRootMail());
         return ResponseEntity.ok(null);
     }
 
     /**
      * 添加评论信息
      * @param comment 评论信息
-     * @param request 用于获取评论者ip
+     * @param request 用于获取评论者Ip
      */
     @PostMapping("comment")
     public ResponseEntity<Void> addComment(
@@ -195,6 +214,44 @@ public class ArticleController {
         String ip = request.getHeader("X-Real-IP");
         comment.setIp(ip);
         articleService.addComment(comment);
+        String title = articleService.getArticleTitleById(comment.getArticleId());
+        // 给自己邮件提醒
+        mailTemplate.sendTxtMail(
+                "标题为: " + title + " 的博文收到一条新的评论",
+                "评论内容: " + comment.getContent(),
+                mailTemplate.getRootMail());
+        return ResponseEntity.ok(null);
+    }
+
+    /**
+     * 获取全部有评论的博文列表
+     * @return 评论的博文列表
+     */
+    @GetMapping("commentArticle")
+    @CheckLogin
+    public ResponseEntity<List<ArticleInfo>> getArticleHasComment(){
+        return ResponseEntity.ok(articleService.getArticleHasComment());
+    }
+
+    /**
+     * 根据博文Id，获取单个博文的评论
+     * @param articleId 博文Id
+     * @return 博文评论信息列表
+     */
+    @GetMapping("comment/{articleId}")
+    public ResponseEntity<List<ArticleComment>> getCommentsByArticleId(
+            @PathVariable("articleId") Long articleId){
+        return ResponseEntity.ok(articleService.getCommentByArticleId(articleId));
+    }
+
+    /**
+     * 根据评论Id，删除评论
+     * @param commentId 评论Id
+     */
+    @DeleteMapping("comment/{commentId}")
+    public ResponseEntity<Void> deleteComment(
+            @PathVariable("commentId") Long commentId){
+        articleService.deleteCommentById(commentId);
         return ResponseEntity.ok(null);
     }
 }

@@ -29,4 +29,17 @@ public interface ArticleInfoMapper extends Mapper<ArticleInfo> {
      * @param articleId 文章
      */
     void increaseViewNum(Long articleId);
+
+    /**
+     * 根据文章Id获取文章标题
+     * @param articleId 文章Id
+     * @return 文章标题
+     */
+    String getTitleById(Long articleId);
+
+    /**
+     * 获取全部有评论的博文的标题和id
+     * @return 博文列表
+     */
+    List<ArticleInfo> getArticleHasComment();
 }

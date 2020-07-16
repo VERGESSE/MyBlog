@@ -156,14 +156,16 @@
 .next-msg:hover{
     color: #b1ac97;
 }
-.page-link{
-    color: #c5cfe4;
-    background: #121213;
-    border: 1px solid #434347;
-}
-.page-link:hover{
-    color: #f9c828;
-    background: #121213;
+@media (min-width:1px ) {
+    .page-link{
+        color: #c5cfe4;
+        background: #121213;
+        border: 1px solid #434347;
+    }
+    .page-link:hover{
+        color: #f9c828;
+        background: #121213;
+    }
 }
 .footer{
     width: 100%;

@@ -10,6 +10,7 @@ import top.vergessen.blog.domain.Message;
 import top.vergessen.blog.exception.BlogException;
 import top.vergessen.blog.exception.ExceptionEnum;
 import top.vergessen.blog.service.MessageService;
+import top.vergessen.blog.util.MailTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MessageController {
 
     private final MessageService messageService;
+    private final MailTemplate mailTemplate;
 
     /**
      * 获取留言总数
@@ -46,6 +48,12 @@ public class MessageController {
         String ip = request.getHeader("X-Real-IP");
         message.setIp(ip);
         messageService.addMessage(message);
+        // 给自己邮件提醒
+        mailTemplate.sendTxtMail(
+                "收到新的留言信息",
+                "昵称: " + message.getName()
+                        + " \n留言信息: " + message.getMessage(),
+                mailTemplate.getRootMail());
         return ResponseEntity.ok(null);
     }
 
@@ -76,8 +84,8 @@ public class MessageController {
 
     /**
      * 根据提供的{@Message}对象更新数据库对应留言id的字段
+     * 用于修改留言展示状态
      * @param message 留言信息
-     * @return 是否修改成功
      */
     @PutMapping("msg")
     @CheckLogin

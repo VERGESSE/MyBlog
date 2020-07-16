@@ -198,6 +198,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addComment(ArticleComment comment) {
         articleCommentMapper.insertSelective(comment);
     }
@@ -210,8 +211,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteCommentById(Long commentId) {
         articleCommentMapper.deleteByPrimaryKey(commentId);
+    }
+
+    @Override
+    public String getArticleTitleById(Long articleId) {
+        return articleInfoMapper.getTitleById(articleId);
+    }
+
+    @Override
+    public List<ArticleInfo> getArticleHasComment() {
+        return articleInfoMapper.getArticleHasComment();
     }
 
     private List<ArticleInfoVO> processVoFromInfo(List<ArticleInfo> infos){

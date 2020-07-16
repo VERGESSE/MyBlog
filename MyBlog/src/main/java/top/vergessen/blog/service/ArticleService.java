@@ -101,4 +101,17 @@ public interface ArticleService {
      * @param commentId 评论id
      */
     void deleteCommentById(Long commentId);
+
+    /**
+     * 根据文章Id获取文章标题
+     * @param articleId 文章Id
+     * @return 文章标题
+     */
+    String getArticleTitleById(Long articleId);
+
+    /**
+     * 获取全部有评论的博文列表
+     * @return 评论的博文列表
+     */
+    List<ArticleInfo> getArticleHasComment();
 }

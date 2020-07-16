@@ -117,6 +117,9 @@ public class ViewController {
         articleService.increaseViewNum(articleId);
         // 获取共用信息
         this.addCategorySearchInfos(model);
+        // 获取博文底部信息展示
+        String footer = resourceService.getRes("博文底部信息");
+        model.addObject("footer", footer);
         // 获取博文信息
         ArticleVO article = articleService.getArticleById(articleId);
         model.addObject("article", article);
@@ -130,7 +133,7 @@ public class ViewController {
 
     @GetMapping({"search/{search}","search/{search}/{page}"})
     public ModelAndView search(
-            @PathVariable(name = "search", required = true)String search,
+            @PathVariable(name = "search")String search,
             @PathVariable(name = "page", required = false)Integer page){
         page = (page == null || page < 1) ? 1 : page;
         ModelAndView model = new ModelAndView("blog");
