@@ -99,7 +99,7 @@ public class ViewController {
                 page, ONE_PAGE_NUM, "", name);
         model.addObject("articles", articleList);
         // 添加分页信息
-        String[] pageInfo = this.generatePageInfo(name, page, articleList.size());
+        String[] pageInfo = this.generatePageInfo("blog", name, page, articleList.size());
         model.addObject("Previous", pageInfo[0]);
         model.addObject("Next",pageInfo[1]);
         return model;
@@ -144,7 +144,7 @@ public class ViewController {
                 page, ONE_PAGE_NUM, search, "");
         model.addObject("articles", articleList);
         // 添加分页信息
-        String[] pageInfo = this.generatePageInfo(search, page, articleList.size());
+        String[] pageInfo = this.generatePageInfo("search", search, page, articleList.size());
         model.addObject("Previous", pageInfo[0]);
         model.addObject("Next",pageInfo[1]);
         return model;
@@ -153,13 +153,13 @@ public class ViewController {
     /**
      * 根据提供得信息生成页码信息传给前端
      */
-    private String[] generatePageInfo(String name, Integer page, Integer size){
+    private String[] generatePageInfo(String type, String name, Integer page, Integer size){
         String[] pageInfo = new String[2];
         name = "".equals(name) ? "all" : name;
         int previousPage = page == 1 ? page :    page - 1;
         int nextPage = size < ONE_PAGE_NUM ? page : page + 1;
-        pageInfo[0] = "/blog/" + name + "/" + previousPage;
-        pageInfo[1] = "/blog/" + name + "/" + nextPage;
+        pageInfo[0] = "/"+ type +"/" + name + "/" + previousPage;
+        pageInfo[1] = "/"+ type +"/" + name + "/" + nextPage;
         return pageInfo;
     }
 
