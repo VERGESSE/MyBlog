@@ -129,26 +129,31 @@
           <span style="color: #909399;font-size: 23px;margin-left: 20px">待审核</span>
           <el-divider style="margin-left: 20px" />
           <el-table :data="notCheckInfos.list" border style="width: 100%">
-            <el-table-column label="好友昵称" min-width="130" align="center">
+            <el-table-column label="好友昵称" min-width="110" align="center">
               <template slot-scope="scope">
                 {{ scope.row.name }}
               </template>
             </el-table-column>
-            <el-table-column label="友链介绍" min-width="250" align="center">
+            <el-table-column label="友链介绍" min-width="200" align="center">
               <template slot-scope="scope">
                 {{ scope.row.detail }}
               </template>
             </el-table-column>
-            <el-table-column label="友链地址" min-width="210" align="center">
+            <el-table-column label="友链地址" min-width="80" align="center">
               <template slot-scope="scope">
                 <el-link
-                  type="info"
+                  type="primary"
                   :href="scope.row.url"
                   style="font-size: 3px"
                   target="_blank"
                 >
-                  {{ scope.row.url }}
+                  点击访问
                 </el-link>
+              </template>
+            </el-table-column>
+            <el-table-column label="申请人邮箱" min-width="150" align="center">
+              <template slot-scope="scope">
+                {{ scope.row.email }}
               </template>
             </el-table-column>
             <el-table-column align="center" label="操作" width="150">

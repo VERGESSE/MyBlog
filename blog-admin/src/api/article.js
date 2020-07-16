@@ -45,6 +45,27 @@ export function getArticleInfo(page) {
   })
 }
 
+export function getArticleHasComment() {
+  return request({
+    url: '/article/commentArticle',
+    method: 'get'
+  })
+}
+
+export function getCommentsByArticleId(id) {
+  return request({
+    url: '/article/comment/' + id,
+    method: 'get'
+  })
+}
+
+export function deleteComment(id) {
+  return request({
+    url: '/article/comment/' + id,
+    method: 'delete'
+  })
+}
+
 // ========================== 外链API ==============================
 export function addLink(data) {
   return request({
