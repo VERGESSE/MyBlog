@@ -5,7 +5,7 @@
         优质博文分享列表
       </div>
       <el-table :data="goodLinkInfos.list" border style="width: 100%">
-        <el-table-column label="外链ID" width="130" align="center">
+        <el-table-column label="外链ID" min-width="140" align="center">
           <template slot-scope="scope">
             {{ scope.row.id }}
           </template>

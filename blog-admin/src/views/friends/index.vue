@@ -5,7 +5,7 @@
         友情链接列表
       </div>
       <el-table :data="friendInfos.list" border style="width: 100%">
-        <el-table-column label="友链ID" width="130" align="center">
+        <el-table-column label="友链ID" min-width="140" align="center">
           <template slot-scope="scope">
             {{ scope.row.id }}
           </template>

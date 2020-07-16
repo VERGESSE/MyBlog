@@ -1,7 +1,7 @@
 <template>
   <div class="log-container shadow">
     <el-table :data="pageInfo.list" stripe border style="width: 100%;padding-top: 15px;">
-      <el-table-column label="IP" width="125">
+      <el-table-column label="IP" width="140">
         <template slot-scope="scope">
           {{ scope.row.ip }}
         </template>
