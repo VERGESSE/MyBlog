@@ -18,7 +18,7 @@
           {{ scope.row.remark }}
         </template>
       </el-table-column>
-      <el-table-column label="url" width="190" align="center">
+      <el-table-column label="url" width="200" align="center">
         <template slot-scope="scope">
           {{ scope.row.operateUrl.split("/").slice(3).join("/") }}
         </template>

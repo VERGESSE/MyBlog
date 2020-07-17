@@ -121,7 +121,7 @@ public class ViewController {
         String footer = resourceService.getRes("博文底部信息");
         model.addObject("footer", footer);
         // 获取博文信息
-        ArticleVO article = articleService.getArticleById(articleId);
+        ArticleVO article = articleService.getArticleById(articleId, true);
         model.addObject("article", article);
         List<ArticleInfoVO> articleList = articleService.getTopArticle(1, 10);
         model.addObject("articleList", articleList);
@@ -156,7 +156,7 @@ public class ViewController {
     private String[] generatePageInfo(String type, String name, Integer page, Integer size){
         String[] pageInfo = new String[2];
         name = "".equals(name) ? "all" : name;
-        int previousPage = page == 1 ? page :    page - 1;
+        int previousPage = page == 1 ? page : page - 1;
         int nextPage = size < ONE_PAGE_NUM ? page : page + 1;
         pageInfo[0] = "/"+ type +"/" + name + "/" + previousPage;
         pageInfo[1] = "/"+ type +"/" + name + "/" + nextPage;

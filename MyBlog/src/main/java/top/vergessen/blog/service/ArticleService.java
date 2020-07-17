@@ -24,9 +24,10 @@ public interface ArticleService {
     /**
      * 根据文章ID获取文章信息
      * @param id 文章ID
+     * @param markdown 是否获取markdown格式，true为获取markdown格式，否则获取html格式
      * @return ID对应的文章主体信息
      */
-    ArticleVO getArticleById(Long id);
+    ArticleVO getArticleById(Long id, Boolean markdown);
 
     /**
      * 创建新的博文

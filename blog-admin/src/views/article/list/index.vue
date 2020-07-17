@@ -116,7 +116,7 @@ export default {
       })
     },
     articleDetail(row) {
-      window.open(this.host + '/article/' + row.id, '_blank')
+      window.open(this.host + '/article/v/' + row.id, '_blank')
     },
     editArticle(row) {
       this.$router.push({ name: 'CreateArticle', params: { articleId: row.id }})

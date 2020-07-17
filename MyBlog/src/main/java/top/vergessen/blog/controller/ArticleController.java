@@ -70,7 +70,7 @@ public class ArticleController {
     @GetMapping("{id}")
     public ResponseEntity<ArticleVO> getArticleById(
             @PathVariable("id") Long id){
-        return ResponseEntity.ok(articleService.getArticleById(id));
+        return ResponseEntity.ok(articleService.getArticleById(id, false));
     }
 
     /**

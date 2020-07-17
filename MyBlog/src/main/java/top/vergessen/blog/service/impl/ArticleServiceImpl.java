@@ -44,24 +44,29 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleVO getArticleById(Long id) {
+    public ArticleVO getArticleById(Long id, Boolean markdown) {
         // 根据ID获取文章信息
         ArticleInfo articleInfo = articleInfoMapper.selectByPrimaryKey(id);
         // 获取文章文本
         ArticleContent articleContent = articleContentMapper.selectByPrimaryKey(id);
         // 构造返回给前端的文章信息
-        return ArticleVO.builder()
+        ArticleVO articleVO = ArticleVO.builder()
                 .id(id)
                 .title(articleInfo.getTitle())
                 .summary(articleInfo.getSummary())
-                // 将Markdown格式的文本转为HTML
-                .content(Markdown2HtmlUtil.markdown2html(
-                        articleContent.getContent()))
                 .tags(Arrays.asList(StringUtils.split(articleInfo.getTags(), "|")))
                 .traffic(articleInfo.getTraffic())
                 .isTop(articleInfo.getIsTop())
                 .createBy(articleInfo.getCreateBy())
                 .build();
+        if (markdown){
+            // 将Markdown格式的文本转为HTML
+            articleVO.setContent(Markdown2HtmlUtil.markdown2html(
+                            articleContent.getContent()));
+        } else {
+            articleVO.setContent(articleContent.getContent());
+        }
+        return articleVO;
     }
 
     @Override

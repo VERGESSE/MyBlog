@@ -125,7 +125,7 @@
 			<div class="blog" id="blog">
 				<div class="container">
 					<div class="row" id="articleList-p">
-                        <div class="col-lg-4 col-md-12 col-xs-12" th:each="item:${articles}">
+                        <div class="col-lg-4 col-md-12 col-xs-12" th:each="item,index:${articles}" th:if="${index.index < 6}">
                             <div class="post" >
                                 <!-- Post Image -->
                                 <div class="post-img">
