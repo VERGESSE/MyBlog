@@ -39,10 +39,11 @@ spring:
     username: vergessentop@163.com 
     // 你自己的163邮箱授权码
     password: yourpassword    
-    // 是否开启邮箱服务，如果不会申请163邮箱或者qq邮箱的smtp服务可以置为false关闭邮箱服务                 // 申请方法很简单，搜索引擎随便一搜就行 
+    // 是否开启邮箱服务，如果不会申请163邮箱或者qq邮箱的smtp服务可以置为false关闭邮箱服务                 
+    // 申请方法很简单，搜索引擎随便一搜就行 
     isopen: true
 imgGo:
-  // 你图床的事迹地址，一般就是你的域名（图床服务经nginx转发的话，ngnix配置下面给出）
+  // 你图床的实际地址，一般就是你的域名（图床服务经nginx转发的话，ngnix配置下面给出）
   serverUrl: https://www.vergessen.top    
   // 同上面的图床密码
   auth: yourpassword                                                    
