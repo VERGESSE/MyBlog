@@ -2,6 +2,7 @@ package top.vergessen.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,9 @@ public class MessageController {
             HttpServletRequest request){
         // 获取留言者IP
         String ip = request.getHeader("X-Real-IP");
+        if (StringUtils.isBlank(ip) || "0.0.0.0".equals(ip)) {
+            ip = request.getRemoteAddr();
+        }
         message.setIp(ip);
         messageService.addMessage(message);
         // 给自己邮件提醒

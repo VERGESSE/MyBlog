@@ -2,6 +2,7 @@ package top.vergessen.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -212,6 +213,9 @@ public class ArticleController {
             @RequestBody ArticleComment comment,
             HttpServletRequest request){
         String ip = request.getHeader("X-Real-IP");
+        if (StringUtils.isBlank(ip) || "0.0.0.0".equals(ip)) {
+            ip = request.getRemoteAddr();
+        }
         comment.setIp(ip);
         articleService.addComment(comment);
         String title = articleService.getArticleTitleById(comment.getArticleId());
