@@ -156,6 +156,14 @@
 .next-msg:hover{
     color: #b1ac97;
 }
+#change-size{
+    font-size: 14px;
+    margin-top: 12px;
+    color: #f9c828;
+}
+#change-size:hover{
+    color: yellow;
+}
 @media (min-width:1px ) {
     .page-link{
         color: #c5cfe4;

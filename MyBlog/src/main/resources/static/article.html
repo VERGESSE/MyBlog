@@ -172,13 +172,14 @@
                                     </ul>
                                 </div>
                                 <div class="sidebar-categories">
-                                    <h4>全部分类</h4>
+                                    <h4>分类</h4>
                                     <ul class="categories-list list-unstyled" id="categoryList">
                                         <li th:each="item,stat:${categorys}">
                                             <a href="#" th:href="@{'/blog/'+${item.name}}"
                                                th:utext="${item.name}+'<span>'+${item.number}+'</span>'"></a>
                                         </li>
                                     </ul>
+                                    <div id="change-size">全部分类</div>
                                 </div>
                                 <div class="sidebar-posts" id="articleLasted">
                                     <h4>最新博文</h4>
@@ -260,6 +261,34 @@
                         $('#'+aId).css('color', '#f9c828');
                     })
                 }
+
+                const showNum = 6;
+                $.each($('#categoryList li'), function (index, elem) {
+                    if (index >= showNum) {
+                        elem.style.display = 'none';
+                    }
+                });
+
+                if ($('#categoryList li').length <= showNum)
+                    $('#change-size').css("display", "none");
+
+                let isAll = false;
+                $('#change-size').click(function () {
+                    if (isAll) {
+                        $.each($('#categoryList li'), function (index, elem) {
+                            if (index >= showNum) {
+                                elem.style.display = 'none';
+                            }
+                        });
+                        $('#change-size').text("全部分类")
+                    } else {
+                        $.each($('#categoryList li'), function (index, elem) {
+                            elem.style.display = 'block';
+                        });
+                        $('#change-size').text("收起")
+                    }
+                    isAll = !isAll
+                })
             });
             //添加评论
             function submitComment() {

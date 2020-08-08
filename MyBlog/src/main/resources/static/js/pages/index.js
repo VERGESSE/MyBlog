@@ -84,7 +84,7 @@ $(document).ready(function () {
                         '    <h4 class="title-box">'+item.name+'</h4>\n' +
                         '    <div class="content-box">\n' +
                         '        <p>\n' +
-                        '            <span><i class="fa fa-commenting"></i>&nbsp&nbsp'+item.message+'</span>\n' +
+                        '            <i class="fa fa-commenting">&nbsp&nbsp'+item.message+'</i>\n' +
                         '        </p>\n' +
                         '    </div>\n' +
                         '</div>'

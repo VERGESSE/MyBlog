@@ -23,7 +23,7 @@ public class LocalDateTimeSerializerConfig {
     private String pattern;
 
     /**
-     * 对 {@LocalDateTime} 进行序列化和反序列化的配置
+     * 对 {@LocalDateTime} {@Long} 进行序列化和反序列化的配置
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
