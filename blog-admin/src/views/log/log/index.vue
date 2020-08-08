@@ -33,7 +33,7 @@
           {{ scope.row.createBy }}
         </template>
       </el-table-column>
-      <el-table-column label="设备" min-width="280" align="center">
+      <el-table-column label="设备" min-width="300" align="center">
         <template slot-scope="scope">
           {{ scope.row.operateBy }}
         </template>

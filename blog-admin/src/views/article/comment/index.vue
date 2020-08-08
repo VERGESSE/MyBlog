@@ -9,8 +9,8 @@
       >
         <div v-for="comment in comments" :key="comment.id" class="comments">
           <div style="color: #3a8ee6">
-            <div style="float: left">{{ comment.name }} : </div>
-            <div style="margin-left: 100px">{{ comment.createBy }}</div>
+            <span style="float: left">{{ comment.name }} : </span>
+            <span style="margin-left: 60px">{{ comment.createBy }}</span>
             <el-button
               type="danger"
               size="small"
@@ -90,7 +90,6 @@ export default {
       }
       .comment-btn{
         float: right;
-        margin-bottom: 10px;
       }
     }
     &-text {

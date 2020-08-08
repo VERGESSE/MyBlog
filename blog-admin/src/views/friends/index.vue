@@ -32,7 +32,7 @@
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column label="好友头像" min-width="240" align="center">
+        <el-table-column label="好友头像" min-width="260" align="center">
           <template slot-scope="scope">
             <el-link
               type="info"

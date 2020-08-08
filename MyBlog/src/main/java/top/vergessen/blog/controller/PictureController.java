@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.vergessen.blog.auth.CheckLogin;
+import top.vergessen.blog.domain.Picture;
 import top.vergessen.blog.service.PictureService;
 import top.vergessen.blog.util.ImgGoTemplate;
 
@@ -34,7 +35,7 @@ public class PictureController {
      */
     @GetMapping("picture")
     @CheckLogin
-    public ResponseEntity<PageInfo> getPicturePageByType(
+    public ResponseEntity<PageInfo<Picture>> getPicturePageByType(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "0") Byte type){

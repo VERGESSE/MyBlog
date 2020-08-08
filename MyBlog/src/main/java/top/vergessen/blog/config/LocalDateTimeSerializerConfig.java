@@ -1,5 +1,6 @@
 package top.vergessen.blog.config;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,7 @@ public class LocalDateTimeSerializerConfig {
                 // 反序列化
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(formatter))
                 // 序列化
-                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(formatter));
+                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(formatter))
+                .serializerByType(Long.class, ToStringSerializer.instance);
     }
 }
