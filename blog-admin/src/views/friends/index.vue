@@ -32,16 +32,14 @@
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column label="好友头像" min-width="260" align="center">
+        <el-table-column label="好友头像" min-width="66" align="center">
           <template slot-scope="scope">
-            <el-link
-              type="info"
-              :href="scope.row.photo"
-              style="font-size: 3px"
-              target="_blank"
-            >
-              {{ scope.row.photo.split("/").slice(3).join("/") }}
-            </el-link>
+            <el-image
+              style="max-width: 66px; max-height: 66px"
+              :src="scope.row.photo"
+              preview-src-list
+              fit="scale-down"
+            />
           </template>
         </el-table-column>
         <el-table-column label="创建时间" min-width="160" align="center">
@@ -199,7 +197,7 @@ export default {
       friendsList: null,
       friendInfos: {
         pageNum: 1,
-        pageSize: 8,
+        pageSize: 6,
         total: 0,
         list: []
       },

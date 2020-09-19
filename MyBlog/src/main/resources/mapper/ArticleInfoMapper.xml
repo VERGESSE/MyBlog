@@ -46,6 +46,6 @@
     </select>
 
     <update id="increaseViewNum">
-      UPDATE tbl_article_info SET traffic = traffic + 1 WHERE id = #{articleId};
+      UPDATE tbl_article_info SET traffic = traffic + 1 WHERE id = #{articleId}
     </update>
 </mapper>

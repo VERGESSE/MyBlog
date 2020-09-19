@@ -152,9 +152,9 @@ export default {
     &-container {
       margin: 20px;
       .pagination{
-        margin-top: 7px;
-        text-align: center;
-      }
+         margin-top: 7px;
+         text-align: center;
+       }
     }
     &-text {
       font-size: 30px;

@@ -15,5 +15,6 @@ public interface ArticleCategoryMapper extends Mapper<ArticleCategory> {
      * @param oldName 老的名称
      * @param newName 新的名称
      */
-    void updateCategoryName(@Param("oldName") String oldName, @Param("newName") String newName);
+    void updateCategoryName(@Param("oldName") String oldName,
+                            @Param("newName") String newName);
 }

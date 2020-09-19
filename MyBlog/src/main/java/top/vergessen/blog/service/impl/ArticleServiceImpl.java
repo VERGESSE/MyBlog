@@ -112,7 +112,7 @@ public class ArticleServiceImpl implements ArticleService {
     public PageInfo<ArticleInfo> getArticleByCategoryAndSearchAndPage(
             Integer page, Integer size, String search, String category, Boolean isTop) {
         // 根据分类和搜索信息获取相关博文信息
-        return PageHelper.startPage(page, size).doSelectPageInfo( () ->
+        return PageHelper.startPage(page, size).doSelectPageInfo(() ->
             articleInfoMapper.getArticleByCategoryAndSearchAndPage(search, category, isTop));
     }
 

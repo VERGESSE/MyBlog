@@ -7,7 +7,7 @@
             博文分类列表
           </div>
           <el-table :data="categoryList.list" border style="width: 100%">
-            <el-table-column label="分类ID" width="66" align="center">
+            <el-table-column label="分类ID" width="80" align="center">
               <template slot-scope="scope">
                 {{ scope.row.id }}
               </template>
@@ -22,16 +22,14 @@
                 {{ scope.row.number }}
               </template>
             </el-table-column>
-            <el-table-column label="分类图标" min-width="240" align="center">
+            <el-table-column label="分类图标" min-width="100" align="center">
               <template slot-scope="scope">
-                <el-link
-                  type="info"
-                  :href="scope.row.pictureUrl"
-                  style="font-size: 3px"
-                  target="_blank"
-                >
-                  {{ scope.row.pictureUrl.split("/").slice(3).join("/") }}
-                </el-link>
+                <el-image
+                  style="max-width: 100px; max-height: 60px"
+                  :src="scope.row.pictureUrl"
+                  preview-src-list
+                  fit="scale-down"
+                />
               </template>
             </el-table-column>
             <el-table-column align="center" label="操作" width="158">
@@ -91,16 +89,14 @@
                 {{ scope.row.name }}
               </template>
             </el-table-column>
-            <el-table-column label="图标" min-width="220" align="center">
+            <el-table-column label="图标" min-width="60" align="center">
               <template slot-scope="scope">
-                <el-link
-                  type="info"
-                  :href="scope.row.pictureUrl"
-                  style="font-size: 3px"
-                  target="_blank"
-                >
-                  {{ scope.row.pictureUrl.split("/").slice(3).join("/") }}
-                </el-link>
+                <el-image
+                  style="max-width: 60px; max-height: 60px"
+                  :src="scope.row.pictureUrl"
+                  preview-src-list
+                  fit="scale-down"
+                />
               </template>
             </el-table-column>
             <el-table-column align="center" label="操作" width="158">
@@ -208,13 +204,13 @@ export default {
       technologys: null,
       categoryList: {
         pageNum: 1,
-        pageSize: 6,
+        pageSize: 5,
         total: 0,
         list: []
       },
       technologyList: {
         pageNum: 1,
-        pageSize: 6,
+        pageSize: 5,
         total: 0,
         list: []
       },

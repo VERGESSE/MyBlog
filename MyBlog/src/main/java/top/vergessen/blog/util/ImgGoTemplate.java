@@ -140,8 +140,8 @@ public class ImgGoTemplate {
                 new HttpEntity<>(map, headers);
         String newImg = restTemplate.postForObject(
                 serverUrl + "/imgGo/thumb", request, String.class);
-        validateResp(newImg);
-        return serverUrl + newImg;
+        boolean success = validateResp(newImg);
+        return success ? serverUrl + newImg : imgPath;
     }
 
     /**
@@ -170,16 +170,17 @@ public class ImgGoTemplate {
      * 则抛出 {@IllegalArgumentException} 异常
      * @param newImg 需要校验的返回值
      */
-    private void validateResp(String newImg){
+    private boolean validateResp(String newImg){
         if (IMG_NOT_FOUND.equals(newImg)){
             throw new IllegalArgumentException("请求图片不存在");
         } else if (THUMB_ERR.equals(newImg)){
-            throw new IllegalArgumentException("剪裁失败");
+            return false;
         } else if (PIXEL_TOO_BIG.equals(newImg)){
             throw new IllegalArgumentException("请求像素过大");
         } else if (ILLEGAL_REQUEST.equals(newImg)){
             throw new IllegalArgumentException("无权请求");
         }
+        return true;
     }
 
     public String getServerUrl() {

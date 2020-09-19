@@ -72,7 +72,7 @@ public class FriendsServiceImpl implements FriendsService {
                 friend.setPhoto(img);
                 String thumbImg = imgGoTemplate.getThumbImg(img, 150);
                 friend.setPhoto(thumbImg);
-            } else {
+            } else if (!photo.contains("150")){
                 // 如果是，先剪裁再上传
                 String thumbImg = imgGoTemplate.getThumbImg(photo, 150);
                 friend.setPhoto(thumbImg);

@@ -4,6 +4,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 const url = window.location.href.split('#')[0].split('admin')[0]
+// const url = 'http://192.168.1.150:8666'
 // create an axios instance
 const service = axios.create({
   baseURL: url,
