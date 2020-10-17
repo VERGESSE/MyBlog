@@ -221,7 +221,7 @@
                 });
 
                 // 生成目录
-                if (window.innerWidth > 1750) {
+                if (window.innerWidth > 1400) {
                     let markDown = document.getElementById("markdown-body");
                     let catalog = document.getElementById('catalog');
                     const nodes  = ['H1','H2','H3','H4','H5'];
@@ -289,6 +289,13 @@
                     }
                     isAll = !isAll
                 })
+
+                // 设置屏幕分辨比率
+                let wid = $(window).width();
+                if(wid > 1000 && wid < 1700){
+                    let len = wid / 1700;
+                    $("html").css("zoom",len);
+                }
             });
             //添加评论
             function submitComment() {

@@ -76,7 +76,7 @@ public interface ArticleService {
      * @param category 分类
      * @return 搜索获取的结果集
      */
-    List<ArticleInfoVO> getArticleList(int page, int size,String search, String category);
+    List<ArticleInfoVO> getArticleList(int page, int size, String search, String category);
 
     /**
      * 根据文章Id增加访问量

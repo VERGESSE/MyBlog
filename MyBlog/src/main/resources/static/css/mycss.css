@@ -23,7 +23,7 @@
     width: 0;
     height: 0;
 }
-@media (min-width:1750px) {
+@media (min-width:1400px) {
     .article-container{
         margin-left: 380px;
     }
@@ -97,8 +97,8 @@
 }
 
 #my-friends img{
-    height:100px;
-    width: 100px;
+    height:80px;
+    width: 80px;
     object-fit: cover;
     display:inline-block;
     border-radius: 50%;
@@ -113,8 +113,7 @@
     box-shadow: -1px -1px 2px 2px rgba(255, 255, 255, 0.2);
 }
 #my-friends p{
-    padding-left: 13px;
-    width: 340px;
+    width: 300px;
     overflow:hidden;
 }
 .apply-friend{
@@ -132,10 +131,10 @@
     background: #121213;
 }
 .good-link{
-    padding: 10px 30px;
+    padding: 10px 25px;
     border-radius: 10px;
     box-shadow: 0 1px 1px 1px rgba(255, 255, 255, 0.1);
-    font-size: 17px;
+    font-size: 16px;
     color: #b1ac97;
     letter-spacing: 2px;
 }

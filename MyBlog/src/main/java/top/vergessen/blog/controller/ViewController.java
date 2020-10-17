@@ -123,7 +123,7 @@ public class ViewController {
         // 获取博文信息
         ArticleVO article = articleService.getArticleById(articleId, true);
         model.addObject("article", article);
-        List<ArticleInfoVO> articleList = articleService.getTopArticle(1, 10);
+        List<ArticleInfoVO> articleList = articleService.getArticleList(1, 10, "", "");
         model.addObject("articleList", articleList);
         // 获取评论信息
         List<ArticleComment> comments = articleService.getCommentByArticleId(articleId);

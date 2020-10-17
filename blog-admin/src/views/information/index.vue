@@ -43,7 +43,6 @@ export default {
   created() {
     getRes().then(response => {
       this.value = response
-      console.log(response)
     })
   },
   methods: {

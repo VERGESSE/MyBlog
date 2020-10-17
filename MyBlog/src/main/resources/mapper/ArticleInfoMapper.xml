@@ -17,11 +17,12 @@
 
     <select id="getArticleByCategoryAndSearchAndPage" resultType="top.vergessen.blog.domain.ArticleInfo">
       SELECT id,title,summary,tags,is_top,traffic,create_by
-      FROM tbl_article_info
+      FROM tbl_article_info AS a
+        <if test="category != ''">
+            JOIN (SELECT article_id FROM tbl_article_category WHERE category_name = #{category}) AS b
+            ON a.id = b.article_id
+        </if>
       WHERE id = id
-      <if test="category != ''">
-        AND id IN (SELECT article_id FROM tbl_article_category WHERE category_name = #{category})
-      </if>
       <if test="search != ''">
         AND (title LIKE CONCAT('%',#{search},'%') OR summary LIKE CONCAT('%',#{search},'%') OR tags LIKE CONCAT('%',#{search},'%'))
       </if>
@@ -39,10 +40,12 @@
     </select>
     <select id="getArticleHasComment" resultType="top.vergessen.blog.domain.ArticleInfo">
         SELECT id,title
-        FROM tbl_article_info
-        WHERE id IN (
-            SELECT article_id FROM tbl_article_comment GROUP BY article_id
-        ) ORDER BY create_by DESC
+        FROM tbl_article_info AS a
+            JOIN (
+                SELECT article_id FROM tbl_article_comment GROUP BY article_id
+                ) AS d
+                ON d.article_id = a.id
+        ORDER BY create_by DESC
     </select>
 
     <update id="increaseViewNum">

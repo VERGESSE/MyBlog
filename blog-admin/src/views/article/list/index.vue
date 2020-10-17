@@ -5,8 +5,8 @@
       stripe
       style="width: 100%"
     >
-      <el-table-column label="文章ID" prop="id" min-width="150" align="center" />
-      <el-table-column label="文章标题" prop="title" min-width="350" align="center" />
+      <el-table-column label="文章ID" prop="id" min-width="155" align="center" />
+      <el-table-column label="文章标题" prop="title" min-width="335" align="center" />
       <el-table-column label="置顶" prop="isTop" min-width="60" align="center">
         <template slot-scope="scope">
           <el-tag
@@ -46,7 +46,7 @@
       </el-table-column>
       <el-table-column label="阅读量" prop="traffic" min-width="70" align="center" />
       <el-table-column label="创建时间" prop="createBy" min-width="180" align="center" />
-      <el-table-column min-width="200" prop="search">
+      <el-table-column width="225" prop="search">
         <template slot="header" slot-scope="scope">
           <el-input
             v-model.trim="search"

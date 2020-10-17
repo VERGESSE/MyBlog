@@ -56,8 +56,9 @@ mybatis:
     map-underscore-to-camel-case: true
 logging:
   level:
-    top.vergessen.blog: info
-
+    top.vergessen.blog: trace
+pagehelper:
+  helper-dialect: top.vergessen.blog.config.MyMysqlDialect
 imgGo:
   serverUrl: https://www.vergessen.top
   auth: yourpassword
@@ -68,4 +69,3 @@ jwt:
   secret: MyBlog--Vergessen--secret--default
   # 有效期，单位秒，默认三天
   expire-time-in-second: 259200
-
