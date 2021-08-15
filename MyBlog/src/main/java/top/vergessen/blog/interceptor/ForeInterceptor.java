@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
@@ -95,6 +96,7 @@ public class ForeInterceptor implements HandlerInterceptor {
                         .getForObject(baseUrl + sysLog.getIp(), String.class);
                 HashMap hashMap = JSON.parseObject(json, HashMap.class);
                 addr = (String) Objects.requireNonNull(hashMap).get("addr");
+                addr = new String(addr.getBytes(StandardCharsets.UTF_8), Charset.forName("UTF-8"));
                 ipAddrCache.put(sysLog.getIp(), addr);
             }
             String detail = sysLogService.selectDetailByIp(sysLog.getIp());
