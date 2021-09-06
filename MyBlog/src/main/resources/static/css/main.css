@@ -889,6 +889,7 @@ section.active {
     position: relative;
     overflow: hidden;
     border-radius: 4px;
+    width: 100%;
 }
 
 .portfolio .portfolio-content .item img {
