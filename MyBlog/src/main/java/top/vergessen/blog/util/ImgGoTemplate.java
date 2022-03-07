@@ -1,6 +1,8 @@
 package top.vergessen.blog.util;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -17,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * 图床工具请求模板
@@ -67,7 +68,11 @@ public class ImgGoTemplate {
     /**
      * 异步删除图片线程池，不阻塞主程序
      */
-    private ExecutorService deleteExecutor = Executors.newFixedThreadPool(5);
+    private final ExecutorService deleteExecutor = new ThreadPoolExecutor(
+            1, 1, 0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(20),
+            new ThreadFactoryBuilder().setNameFormat("ImageGo-%d").build(),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**
      * 向图床请求上传图片

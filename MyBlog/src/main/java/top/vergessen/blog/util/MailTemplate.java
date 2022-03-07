@@ -1,13 +1,13 @@
 package top.vergessen.blog.util;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author Vergessen
@@ -25,7 +25,11 @@ public class MailTemplate {
     /**
      * 邮件发送线程池
      */
-    private ExecutorService mailExecutor = Executors.newFixedThreadPool(5);
+    private final ExecutorService mailExecutor = new ThreadPoolExecutor(
+            3, 3, 0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(50),
+            new ThreadFactoryBuilder().setNameFormat("Mail-%d").build(),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**
      * 是否打开邮件服务

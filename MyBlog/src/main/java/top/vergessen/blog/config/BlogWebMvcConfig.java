@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import top.vergessen.blog.interceptor.CrawlerInterceptor;
 import top.vergessen.blog.interceptor.ForeInterceptor;
 
 import java.nio.charset.Charset;
@@ -34,18 +35,28 @@ public class BlogWebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("admin").setViewName("admin/index.html");
     }
 
-    @Bean
-    public HandlerInterceptor handlerInterceptor(){
-        return new ForeInterceptor();
-    }
-
     /**
      * 配置拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(handlerInterceptor())
+        // 反爬拦截器
+        registry.addInterceptor(crawlerInterceptor())
                 .addPathPatterns("/","/index","/blog/**","/search/**","/article/v/**")
                 .excludePathPatterns("/blog/css/**","/search/css/**");
+        // 日志拦截器
+        registry.addInterceptor(foreInterceptor())
+                .addPathPatterns("/","/index","/blog/**","/search/**","/article/v/**")
+                .excludePathPatterns("/blog/css/**","/search/css/**");
+    }
+
+    @Bean
+    public HandlerInterceptor foreInterceptor(){
+        return new ForeInterceptor();
+    }
+
+    @Bean
+    public HandlerInterceptor crawlerInterceptor(){
+        return new CrawlerInterceptor();
     }
 }

@@ -1,9 +1,9 @@
 package top.vergessen.blog.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,8 +21,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * 前台拦截器 用于对访问数量进行统计
@@ -44,7 +43,11 @@ public class ForeInterceptor implements HandlerInterceptor {
     /**
      * 日志记录线程池
      */
-    private ExecutorService logExecutor = Executors.newFixedThreadPool(5);
+    private final ExecutorService LOG_EXECUTOR = new ThreadPoolExecutor(
+            5, 5, 0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(200),
+            new ThreadFactoryBuilder().setNameFormat("SysLog-%d").build(),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**
      * 记录访客日志
@@ -87,7 +90,7 @@ public class ForeInterceptor implements HandlerInterceptor {
         }
 
         // 开启线程记录日志
-        logExecutor.execute(() -> {
+        LOG_EXECUTOR.execute(() -> {
             // 根据用户ip获取用户信息
             String addr = ipAddrCache.get(sysLog.getIp());
             if (addr == null) {

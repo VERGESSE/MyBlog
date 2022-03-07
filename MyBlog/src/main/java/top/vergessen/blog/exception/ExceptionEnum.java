@@ -26,7 +26,9 @@ public enum ExceptionEnum {
     // 技术栈新增失败
     INSERT_TECHNOLOGY_ERROR(500, "技术栈新增失败"),
     // 技术栈信息不存在
-    UPDATE_TECHNOLOGY_ERROR(500, "技术栈信息不存在")
+    UPDATE_TECHNOLOGY_ERROR(500, "技术栈信息不存在"),
+    // 访问频次超标
+    FREQUENCY_OUT_OF_LIMITS(403, "暂时无法访问")
     ;
 
     private int status;
