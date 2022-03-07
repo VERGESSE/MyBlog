@@ -20,7 +20,14 @@
       </el-table-column>
       <el-table-column label="url" width="210" align="center">
         <template slot-scope="scope">
-          {{ scope.row.operateUrl.split("/").slice(3).join("/") }}
+          <el-link
+            type="info"
+            :href="scope.row.operateUrl"
+            target="_blank"
+          >
+            {{ scope.row.operateUrl.split("/").slice(3).join("/") === ''
+              ? 'home' : scope.row.operateUrl.split("/").slice(3).join("/") }}
+          </el-link>
         </template>
       </el-table-column>
       <el-table-column label="操作者地址" min-width="320" align="center">
