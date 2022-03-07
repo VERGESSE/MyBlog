@@ -1,6 +1,7 @@
 package top.vergessen.blog.interceptor;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.vergessen.blog.exception.BlogException;
@@ -17,6 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author haoyu
  * @date 2022/3/7 11:48.
  */
+@Slf4j
 public class CrawlerInterceptor implements HandlerInterceptor {
 
     /**
@@ -61,6 +63,7 @@ public class CrawlerInterceptor implements HandlerInterceptor {
         if (ipFrequency != null && ipFrequency.get() >= MAX_FREQUENCY){
             // 关小黑屋6小时
             BAN.put(ip, new Object());
+            log.info("检测到过量访问，拦截ip: " + ip);
             RELEASE_EXECUTOR.schedule(() -> {
                 BAN.remove(finalIp);
             }, 6, TimeUnit.HOURS);

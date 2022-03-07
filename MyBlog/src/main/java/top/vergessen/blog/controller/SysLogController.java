@@ -22,9 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SysLogController {
 
-    /**
-     * 各种 Service
-     */
     private final SysLogService sysLogService;
 
     /**
