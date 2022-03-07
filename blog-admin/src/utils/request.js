@@ -3,8 +3,8 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// const url = window.location.href.split('#')[0].split('admin')[0]
-const url = 'http://127.0.0.1:8666'
+const url = window.location.href.split('#')[0].split('admin')[0]
+// const url = 'http://127.0.0.1:8666'
 // create an axios instance
 const service = axios.create({
   baseURL: url,
