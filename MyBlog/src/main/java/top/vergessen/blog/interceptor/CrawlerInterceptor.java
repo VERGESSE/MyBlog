@@ -1,14 +1,17 @@
 package top.vergessen.blog.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.vergessen.blog.exception.BlogException;
 import top.vergessen.blog.exception.ExceptionEnum;
+import top.vergessen.blog.exception.ExceptionResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -54,7 +57,9 @@ public class CrawlerInterceptor implements HandlerInterceptor {
 
         // 如果当前ip在小黑屋则直接pass
         if (BAN.get(ip) != null){
-            throw new BlogException(ExceptionEnum.FREQUENCY_OUT_OF_LIMITS);
+            // 渲染错误信息
+            randerFalse(response);
+            return false;
         }
 
         // 获取当前ip本秒内访问频次
@@ -67,7 +72,8 @@ public class CrawlerInterceptor implements HandlerInterceptor {
             RELEASE_EXECUTOR.schedule(() -> {
                 BAN.remove(finalIp);
             }, 6, TimeUnit.HOURS);
-            throw new BlogException(ExceptionEnum.FREQUENCY_OUT_OF_LIMITS);
+            randerFalse(response);
+            return false;
         }
 
         if (ipFrequency != null){
@@ -81,7 +87,12 @@ public class CrawlerInterceptor implements HandlerInterceptor {
             }, 1, TimeUnit.SECONDS);
         }
 
-
         return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
+
+    private void randerFalse(HttpServletResponse response) throws IOException {
+        response.setStatus(ExceptionEnum.FREQUENCY_OUT_OF_LIMITS.getStatus());
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().println(JSON.toJSONString(new ExceptionResult(ExceptionEnum.FREQUENCY_OUT_OF_LIMITS)));
     }
 }
