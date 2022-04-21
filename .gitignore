@@ -1,7 +1,7 @@
 node_modules/
 target/
 !.mvn/wrapper/maven-wrapper.jar
- 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -10,7 +10,7 @@ target/
 .settings
 .springBeans
 *.log
- 
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -18,7 +18,7 @@ target/
 *.ipr
 .mvn
 mvnw*
- 
+
 ### NetBeans ###
 nbproject/private/
 build/
@@ -26,3 +26,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+package-lock.json
