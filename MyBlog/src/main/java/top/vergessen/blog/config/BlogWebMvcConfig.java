@@ -7,10 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import top.vergessen.blog.interceptor.CrawlerInterceptor;
 import top.vergessen.blog.interceptor.ForeInterceptor;
 
@@ -34,6 +31,15 @@ public class BlogWebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("admin").setViewName("admin/index.html");
     }
+
+    /**
+     * 配置静态访问资源
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/admin/static/**").addResourceLocations("classpath:/static/admin/admin/static/");
+    }
+
 
     /**
      * 配置拦截器
