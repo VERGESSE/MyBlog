@@ -73,7 +73,7 @@
 					<li><a class="active" href="#home"><i class="flaticon-door"></i></a></li>
 					<li><a href="#about"><i class="flaticon-icon"></i></a></li>
 					<li><a href="#portfolio"><i class="flaticon-squares"></i></a></li>
-					<li><a href="#blog"><i class="flaticon-blogging"></i></a></li>
+					<li><a href="#blog" id="bolgTag"><i class="flaticon-blogging"></i></a></li>
                     <li><a href="#friends"><i class="fa fa-user-plus"></i></a></li>
                     <li><a href="#link"><i class="fa fa-star"></i></a></li>
 					<li><a href="#contact"><i class="fa fa-commenting-o"></i></a></li>
@@ -465,6 +465,10 @@
                         articlePic[i].style.height = height + 'px';
                     }
                 }, 1500);
+                // 1200ms跳转博文
+                setTimeout(function () {
+                    document.getElementById("bolgTag").click()
+                }, 1200);
             });
 
         </script>
